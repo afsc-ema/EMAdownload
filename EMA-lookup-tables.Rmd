@@ -1,0 +1,65 @@
+---
+title: "EMA-lookup-tables"
+output: html_document
+---
+
+
+
+This document contains lookup tables for EMA data codes. Data are pulled from the AKFIN database. This report was last run `r Sys.Date()`
+
+## Lookup tables
+
+```{r include=FALSE}
+library(odbc)
+library(kableExtra)
+library(dplyr)
+library(getPass)
+library(knitr)
+
+# connect to akfin
+con <- dbConnect(odbc::odbc(), "akfin", UID=getPass(msg="USER NAME"), PWD=getPass())
+
+download_lut <- function(table) {
+  dbFetch(dbSendQuery(con,
+                           paste0("select * from ema.",table)))%>%
+    rename_with(tolower)%>%
+    dplyr::select(-akfin_load_date) 
+
+}
+
+table_vec <- c("LUT_BSIERP_REGION",
+"LUT_FISH_LIFE_HISTORY_STAGE",
+"LUT_GEAR",
+"LUT_GEAR_DESCRIPTION",
+"LUT_GEAR_PERFORMANCE",
+"LUT_LENGTH_TYPE",
+"LUT_NBS_STRATA",
+"LUT_OCEANOGRAPHIC_DOMAIN",
+"LUT_SEX",
+"LUT_TOW_TYPE",
+"LUT_VESSEL_CODE",
+"LUT_ZOOP_STAGE_CODE")
+
+tables<-list()
+
+for (i in 1:length(table_vec)) {
+  tables[[i]] <- download_lut(table_vec[i])
+}
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+
+for (i in seq_along(tables)) {
+
+    print(
+    kable(
+      tables[[i]],
+      format = "markdown"
+    )
+  )
+  
+  
+}
+```
+
