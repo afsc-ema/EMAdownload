@@ -6,7 +6,7 @@
 #' @export
 
 
-get_ema_event_catch <- function(start_year=1990, end_year=3000, tsn=NA, gear=NA) {
+join_event_catch <- function(start_year=1990, end_year=3000, tsn=NA, gear=NA) {
   # download tables from AKFIN
   event <- get_ema_event() |> dplyr::rename_with(tolower)
   catch <- get_ema_catch() |> dplyr::rename_with(tolower)
