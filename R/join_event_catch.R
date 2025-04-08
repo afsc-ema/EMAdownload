@@ -37,7 +37,7 @@ join_event_catch <- function(start_year=1990, end_year=3000, tsn=NA, gear=NA) {
     dplyr::left_join(catch2, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
     dplyr::left_join(event_parameters, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
     dplyr::select(sample_year, event_code, station_id, gear, gear_performance, tow_type, eq_latitude, eq_longitude, effort, 
-                  species_tsn, common_name, scientific_name, lhs_code, total_catch_number, total_catch_weight)
+                  effort_units, species_tsn, common_name, scientific_name, lhs_code, total_catch_number, total_catch_weight)
 
   return(data)
 }
