@@ -16,8 +16,6 @@ join_event_catch <- function(start_year=2002, end_year=3000, tsn=NA,
   taxa <- get_ema_taxonomy() |> dplyr::rename_with(tolower)
   event_parameters <- get_ema_event_parameters() |> dplyr::rename_with(tolower)
 
-  unique.gears <- unique(catch$gear)
-
   # gear filter - only allow gears present in catch table
   if(all(gear %in% unique(catch$gear))){
     gear_vec <- c(gear)
