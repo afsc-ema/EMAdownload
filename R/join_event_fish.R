@@ -4,6 +4,9 @@
 #' ecosystem survey data (from EMA surveys) from the AKFIN data server.
 #' It includes parameters to control start and end year, gear type, and TSN (species code).
 #'
+#' This function, by nature of the type of data it returns, only provides specimen data for locations
+#' where positive catch
+#'
 #' You may want to catch weight the specimen data in which case you should use the join_event_catch
 #' function to get the associated catch information. You then join on station ID, event code, and
 #' event code.
@@ -24,9 +27,14 @@ join_event_fish <- function(start_year=2002, end_year=3000, tsn=NA,
   # gear filter - only allow gears present in catch table
   if(all(gear %in% unique(fish$gear))){
     gear_vec <- c(gear)
-    message("Using default gear type: CAN")
   } else {
     stop("Gear type must be CAN, MAR, NETS156, Nor264")
+  }
+
+  if(all(tsn %in% unique(taxa$species_tsn))){
+    tsn_vec <- c(tsn)
+  } else {
+    stop("Invalid tsn number")
   }
 
   # error message if start year not within range
@@ -39,12 +47,12 @@ join_event_fish <- function(start_year=2002, end_year=3000, tsn=NA,
   }
 
   # optional tsn filter
-  if(is.na(tsn)) {
+  if(anyNA(tsn_vec)) {
     fish2 <-fish |>
       dplyr::left_join(taxa, by="species_tsn")
   } else {
-    fish2 <-fish |>
-      dplyr::inner_join(taxa |> dplyr::filter(species_tsn=tsn), by="species_tsn")
+    fish2 <- fish |>
+      dplyr::inner_join(taxa |> dplyr::filter(species_tsn %in% tsn_vec), by="species_tsn")
   }
 
   # join into one data frame
@@ -52,7 +60,7 @@ join_event_fish <- function(start_year=2002, end_year=3000, tsn=NA,
     dplyr::filter(sample_year >=start_year &
                     sample_year <= end_year
                   & gear %in% gear_vec) |>
-    dplyr::left_join(fish2, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
+    dplyr::right_join(fish2, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
     dplyr::left_join(event_parameters, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
     dplyr::rename(notes = notes.y) |>
     dplyr::select(sample_year, cruise_id, event_code, station_id, gear, gear_performance, tow_type,

@@ -46,7 +46,7 @@ join_event_catch <- function(start_year=2002, end_year=3000, tsn=NA,
       dplyr::left_join(taxa, by="species_tsn")
   } else {
     catch2 <-catch |>
-      dplyr::inner_join(taxa |> dplyr::filter(species_tsn=tsn), by="species_tsn")
+      dplyr::inner_join(taxa |> dplyr::filter(species_tsn==tsn), by="species_tsn")
   }
 
   # join into one data frame
