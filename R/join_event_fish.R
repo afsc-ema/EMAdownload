@@ -1,6 +1,6 @@
 #' @title Get EMA fish specimen data with event information
 #'
-#' @description This function pulls specimem level data with associated event information from
+#' @description This function pulls specimen level data with associated event information from
 #' ecosystem survey data (from EMA surveys) from the AKFIN data server.
 #' It includes parameters to control start and end year, gear type, and TSN (species code).
 #'
@@ -9,7 +9,14 @@
 #'
 #' You may want to catch weight the specimen data in which case you should use the join_event_catch
 #' function to get the associated catch information. You then join on station ID, event code, and
-#' event code.
+#' gear code.
+#'
+#' @param start_year Optional filter for start year, valid range 2002 to present defaults to 2002
+#' @param end_year Optional filter for end year, valid range 2002 to present defaults to 3000
+#' @param tsn Optional filter for species taxonomic serial number (from ITIS.gov), defaults to all species in database. Can take vectors of species tsn
+#' @param gear Optional filter for gear type, options are CAN, MAR, NETS156, Nor64, defaults to CAN. Can take vector of multiple gear types
+#'
+#' @returns Returns a data frame of event information with specimen data (lengths, weights, special samples taken)
 #'
 #' @export
 
@@ -48,7 +55,7 @@ join_event_fish <- function(start_year=2002, end_year=3000, tsn=NA,
 
   # optional tsn filter
   if(anyNA(tsn_vec)) {
-    fish2 <-fish |>
+    fish2 <- fish |>
       dplyr::left_join(taxa, by="species_tsn")
   } else {
     fish2 <- fish |>

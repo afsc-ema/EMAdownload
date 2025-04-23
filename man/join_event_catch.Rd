@@ -6,6 +6,18 @@
 \usage{
 join_event_catch(start_year = 2002, end_year = 3000, tsn = NA, gear = "CAN")
 }
+\arguments{
+\item{start_year}{Optional filter for start year, valid range 2002 to present, defaults to 2002}
+
+\item{end_year}{Optional filter for end year, valid range 2002 to present, defaults to 3000}
+
+\item{tsn}{Optional filter for species taxonomic serial number (from ITIS.gov), defaults to all species in database. Can take vectors of species tsn}
+
+\item{gear}{Optional filter for gear type, options are CAN, MAR, NETS156, Nor64, defaults to CAN. Can take vector of multiple gear types}
+}
+\value{
+Returns a data frame of event information with catch data
+}
 \description{
 This function pulls ecosystem survey data (from EMA surveys) from the AKFIN data server
 It includes parameters to control start and end year, gear type, and TSN (species code)

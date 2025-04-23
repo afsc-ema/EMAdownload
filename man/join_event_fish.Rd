@@ -6,12 +6,27 @@
 \usage{
 join_event_fish(start_year = 2002, end_year = 3000, tsn = NA, gear = "CAN")
 }
+\arguments{
+\item{start_year}{Optional filter for start year, valid range 2002 to present defaults to 2002}
+
+\item{end_year}{Optional filter for end year, valid range 2002 to present defaults to 3000}
+
+\item{tsn}{Optional filter for species taxonomic serial number (from ITIS.gov), defaults to all species in database. Can take vectors of species tsn}
+
+\item{gear}{Optional filter for gear type, options are CAN, MAR, NETS156, Nor64, defaults to CAN. Can take vector of multiple gear types}
+}
+\value{
+Returns a data frame of event information with specimen data (lengths, weights, special samples taken)
+}
 \description{
-This function pulls specimem level data with associated event information from
+This function pulls specimen level data with associated event information from
 ecosystem survey data (from EMA surveys) from the AKFIN data server.
 It includes parameters to control start and end year, gear type, and TSN (species code).
 
+This function, by nature of the type of data it returns, only provides specimen data for locations
+where positive catch
+
 You may want to catch weight the specimen data in which case you should use the join_event_catch
 function to get the associated catch information. You then join on station ID, event code, and
-event code.
+gear code.
 }
