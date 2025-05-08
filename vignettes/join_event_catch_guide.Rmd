@@ -1,0 +1,81 @@
+---
+title: "Join Event Catch Examples"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Guide to join_event_catch}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(EMAdownload)
+```
+
+This vignette will walk through several possible use cases for the join_event_catch() function and provide examples 
+
+### Pull all Juvenile Chinook positive catches from all tows from all years from Northern Bering Sea
+
+```{r}
+df <- join_event_catch(start_year=2002, # Defaults to 2002 if no argument entered.
+                       end_year=2024,
+                       survey_region="NBS",
+                       tsn= 161980,
+                       lhs="J",
+                       gear=c("CAN","Nor264","NETS156","MAR"),
+                       trawl_method=c("S","M","O"),
+                       catch0=FALSE)
+
+nrow(df); head(df)
+```
+
+### Pull all age-0 pollock from surface trawls in all survey regions
+
+```{r}
+df <- join_event_catch(start_year=2002, # Defaults to 2002 if no argument entered.
+                       end_year=2024,
+                       survey_region=c("SEBS","NBS","Chukchi"),
+                       tsn= 934083,
+                       lhs="A0",
+                       gear=c("CAN","Nor264"), # There are no NETS156 or MAR surface trawls.
+                       trawl_method=c("S"),
+                       catch0=FALSE)
+
+nrow(df); head(df)
+```
+
+### Pull all juvenile salmon catches from surface trawls in the Northern Bering Sea and include zero-catches
+
+```{r}
+df <- join_event_catch(start_year=2002, # Defaults to 2002 if no argument entered.
+                       end_year=2024,
+                       survey_region=c("NBS"),
+                       tsn= c(161975,161976,161977,161979,161980),
+                       lhs="J",
+                       gear=c("CAN"), # There are no Nor264 surface trawls in NBS.
+                       trawl_method=c("S"),
+                       catch0=TRUE)
+
+nrow(df); head(df)
+```
+
+### Pull all age-0 pacific cod from non-surface trawls in the Southeastern Bering Sea between 2008 and 2018 and include zero-catches
+
+```{r}
+df <- join_event_catch(start_year=2008, # Defaults to 2002 if no argument entered.
+                       end_year=2018,
+                       survey_region=c("SEBS"),
+                       tsn= 164711,
+                       lhs="A0",
+                       gear=c("CAN","NETS156","Nor264","MAR"), 
+                       trawl_method=c("M","O"),
+                       catch0=TRUE)
+
+nrow(df); head(df)
+```
