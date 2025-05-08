@@ -22,7 +22,6 @@
 #' @examples df <- join_event_catch(start_year=2002,end_year=2024,survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
 
 
-
 join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, tsn=NA,lhs=NA,
                              gear= c("CAN","Nor264"), trawl_method="S", catch0=FALSE) {
   # if else function looks for "catch", "event", "event_parameters" or "taxa" files in local environment before
@@ -38,9 +37,9 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
                   ###This code adds a "region" field.  Note that this region only effectively works for trawls since CTD/CAT stations store lat in a different field.
                   # There's one NETS trawl from 2016 but it's aborted so I don't care about it.
                   large_marine_ecosystem = ifelse(large_marine_ecosystem == "Chuckchi", "Chukchi", large_marine_ecosystem),
-                  region = dplyr::case_when(eq_latitude <=59.9 & large_marine_ecosystem=="Bering Sea" ~ "SEBS",
-                                            eq_latitude >59.9 & eq_latitude <= 65.5 & large_marine_ecosystem=="Bering Sea" ~ "NBS",
-                                            eq_latitude >65.5 ~ "Chukchi",
+                  region = dplyr::case_when(eq_latitude <= 59.9 & !(large_marine_ecosystem == "GOA") ~ "SEBS",
+                                            eq_latitude > 59.9 & eq_latitude <= 65.5 & !(large_marine_ecosystem == "GOA") ~ "NBS",
+                                            eq_latitude > 65.5 ~ "Chukchi",
                                             large_marine_ecosystem=="GOA" ~ "GOA")) |>
     dplyr::mutate(region = ifelse(is.na(region),
                                   dplyr::case_when(gear_in_latitude <= 59.9 & !(large_marine_ecosystem == "GOA") ~ "SEBS",
@@ -75,19 +74,24 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
     stop("Trawl method must be O, V, S, M, L, D, FP, B. See EMA look up tables for tow type descriptions")
   }
 
-  # this is a way of dealing with the "NA" in region that get generated when we created region above
-  # these four lines can be removed if the lat/lon information gets fixed.
-  if(any(survey_region %in% unique(stats::na.omit(event$region)))){
-    survey_region <- c(survey_region)
+  # Optional survey region filter - defaults to survey_region = NA
+  # this is a way of dealing with the "NA" in region column that get generated when we created region above
+  # these four lines can be removed if the lat/lon information gets fixed at those four stations
+  if(all(survey_region %in% unique(stats::na.omit(event$region)))){
+    survey_vec <- c(survey_region)
   } else {
-    survey_region <- c(unique(event$region)) |> stats::na.omit()
+    if(is.na(survey_region)){
+      survey_vec <- c(unique(event$region))
+    } else {
+      stop("Survey region must be one or more of: NBS, SEBS, GOA, or Chukchi")
+    }
   }
-
-  # if(is.na(gear)) {
-  #   gear_vec <- unique(catch$gear)
+  # if(any(survey_region %in% unique(stats::na.omit(event$region)))){
+  #   survey_region <- c(survey_region)
   # } else {
-  #   gear_vec <- c(gear)
+  #   survey_region <- c(unique(event$region)) |> stats::na.omit()
   # }
+
 
   # error message if start year not within range
   if(start_year < 2002 | start_year > max(event$sample_year)) {
@@ -97,7 +101,6 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
   if(end_year < 2002) {
     stop("Start year not within acceptable range, try 2002 - present")
   }
-
 
 
   # optional tsn filter
@@ -121,7 +124,7 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
              & sample_year <= end_year
              & gear %in% gear_vec
              & tow_type %in% trawl_vec
-             & region %in% survey_region) |>
+             & region %in% survey_vec) |>
     # note keeping this a left_join event to catch means that there are about ~11 water hauls (or satisfactory hauls)
     # that legit got ZERO things in the net.
     dplyr::left_join(catch2, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
@@ -139,7 +142,7 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
   # Begin catch 0 calculation
   } else { # stops the function if there are no tsn included
     if(any(is.na(tsn))) {
-      stop("catch0 cannot be TRUE when tsn=NA.  This will produce a data frame of up to 8,667,792 rows.")
+      stop("catch0 cannot be TRUE when tsn=NA. This will produce a data frame of up to 8,667,792 rows.")
     }
     #same event code as above to get sampling events
     event2 <- event |>
@@ -147,7 +150,7 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
                     & sample_year <= end_year
                     & gear %in% gear_vec
                     & tow_type %in% trawl_vec
-                    & region %in% survey_region) |>
+                    & region %in% survey_vec) |>
       dplyr::mutate(haulback_time = lubridate::ymd_hms(haulback_time),
                     eq_time = lubridate::ymd_hms(eq_time),
                     tow_duration = difftime(haulback_time, eq_time, units = "mins"))
@@ -165,13 +168,17 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
                                                                          "tow_type","gear_performance","region",
                                                                          "eq_latitude","eq_longitude","tow_duration")),
                                         by=c("station_id", "event_code", "gear"))
-    #join in event parameter fields
+    # Add event parameter fields to the zero catch-events
     zero_event_param_join <- dplyr::left_join(zero_event_join ,subset(event_parameters,
-                                                                      select=c("station_id","event_code","gear","nbs_strata","bsierp_region",
+                                                                      select=c("station_id","event_code","gear",
+                                                                               "nbs_strata","bsierp_region",
                                                                                "oceanographic_domain","effort","effort_units")),
                                               by=c("station_id","event_code","gear"))
-    #where the magic happens
-    data <- dplyr::left_join(zero_event_param_join,catch2,by=c("station_id","event_code","gear","species_tsn","common_name","scientific_name","lhs_code"))|>
+    # Where the magic catch zero calculation happens
+    # Notice the left_join here with events and catch
+    data <- dplyr::left_join(zero_event_param_join,catch2,by=c("station_id","event_code","gear",
+                                                               "species_tsn","common_name","scientific_name",
+                                                               "lhs_code"))|>
       dplyr::mutate(total_catch_number = ifelse(is.na(total_catch_number),0,total_catch_number),
                     total_catch_weight = ifelse(is.na(total_catch_weight),0,total_catch_weight),
                     cpue_num= total_catch_number/effort,
@@ -179,10 +186,6 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
 
     print(paste("Last AKFIN catch upload date", unique(catch$akfin_load_date)))
   }
-
-
-
-
 
 
   return(data)
