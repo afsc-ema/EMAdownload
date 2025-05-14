@@ -8,6 +8,8 @@
 #' @param end_year Optional filter for end year, valid range 2002 to present, defaults to 3000
 #' @param survey_region Optional filter for survey region.  Defaults to all regions. Options are "SEBS", "NBS", "Chukchi", and "GOA"  Can take vector of multiple regions.
 #' This filter is based on classification of large marine ecosystem and latitude with the separation between the Northern and Southern Bering Sea at 59.9 N
+#' The seperation between NBS and Chukchi is at 65.5. Stations are sorted into region rather than survey objective (i.e. the survey
+#' may be a survey to go to the "Chukchi", but if some stations occurred in the Northern Bering Sea those stations get classified as NBS stations).
 #' @param tsn Filter for species taxonomic serial number (from ITIS.gov), defaults to all species in database. Can take vectors of species tsns.
 #' This parameter is optional if catch0=FALSE, but is required if catch0=TRUE.  Use get_ema_taxonomy function to see full list of TSNs.
 #' @param lhs Optional filter for species life history stage.  For salmon species, options are IM or J. For all other species, see values in EMA-lookup-table.
@@ -32,21 +34,8 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
 
 
   # download tables from AKFIN
-  event <- get_ema_event() |> dplyr::rename_with(tolower) |>
-    dplyr::mutate(gear = ifelse(gear == "NOR64", "Nor64", gear), # fix gear typo in db
-                  ###This code adds a "region" field.  Note that this region only effectively works for trawls since CTD/CAT stations store lat in a different field.
-                  # There's one NETS trawl from 2016 but it's aborted so I don't care about it.
-                  large_marine_ecosystem = ifelse(large_marine_ecosystem == "Chuckchi", "Chukchi", large_marine_ecosystem),
-                  region = dplyr::case_when(eq_latitude <= 59.9 & !(large_marine_ecosystem == "GOA") ~ "SEBS",
-                                            eq_latitude > 59.9 & eq_latitude <= 65.5 & !(large_marine_ecosystem == "GOA") ~ "NBS",
-                                            eq_latitude > 65.5 ~ "Chukchi",
-                                            large_marine_ecosystem=="GOA" ~ "GOA")) |>
-    dplyr::mutate(region = ifelse(is.na(region),
-                                  dplyr::case_when(gear_in_latitude <= 59.9 & !(large_marine_ecosystem == "GOA") ~ "SEBS",
-                                                   gear_in_latitude > 59.9 & gear_in_latitude <= 65.5 & !(large_marine_ecosystem == "GOA") ~ "NBS",
-                                                   gear_in_latitude > 65.5 ~ "Chukchi",
-                                                   large_marine_ecosystem == "GOA" ~ "GOA"), region)) |>
-    # as of 5-5-25 there are four CTD/CAT/Bongo events that have no associated lat/lon that are just going to have to stay for now
+  event <- get_ema_event() |>
+    dplyr::mutate(gear = ifelse(gear == "NOR64", "Nor64", gear)) |>
     ## Filter out aborted and unsatisfactory tows.
     dplyr::filter (!gear_performance %in% c("A","U"))
   catch <- get_ema_catch() |> dplyr::rename_with(tolower) |>
