@@ -93,7 +93,7 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
 
 
   # optional tsn filter
-  if(is.na(tsn)) {
+  if(all(is.na(tsn))) {
     catch2 <-catch |>
       dplyr::left_join(taxa, by="species_tsn")
   } else {

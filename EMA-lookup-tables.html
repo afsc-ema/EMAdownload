@@ -353,15 +353,15 @@ display: none;
 </div>
 
 
-<p>This document contains lookup tables for EMA data codes. Data are
-pulled from the AKFIN database. This report was last run 2025-03-06</p>
+<p>This document contains look-up tables for EMA data codes. Data are
+pulled from the AKFIN database. This report was last run 2025-06-06</p>
 <div id="lookup-tables" class="section level2">
 <h2>Lookup tables</h2>
 <table>
 <thead>
 <tr class="header">
-<th align="right">bsierp_region</th>
-<th align="left">bsierp_region_description</th>
+<th align="right">BSIERP_REGION</th>
+<th align="left">BSIERP_REGION_DESCRIPTION</th>
 </tr>
 </thead>
 <tbody>
@@ -443,36 +443,12 @@ pulled from the AKFIN database. This report was last run 2025-03-06</p>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">lhs_code</th>
-<th align="left">lhs_code_description</th>
-<th align="left">notes</th>
+<th align="left">LHS_CODE</th>
+<th align="left">LHS_CODE_DESCRIPTION</th>
+<th align="left">Notes</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">1</td>
-<td align="left">Unident. Species 1</td>
-<td align="left">Used to differentiate two different unidentified
-species.</td>
-</tr>
-<tr class="even">
-<td align="left">2</td>
-<td align="left">Unident. Species 2</td>
-<td align="left">Used to differentiate two different unidentified
-species.</td>
-</tr>
-<tr class="odd">
-<td align="left">3</td>
-<td align="left">Unident. Species 3</td>
-<td align="left">Used to differentiate two different unidentified
-species.</td>
-</tr>
-<tr class="even">
-<td align="left">4</td>
-<td align="left">Unident. Species 4</td>
-<td align="left">Used to differentiate two different unidentified
-species.</td>
-</tr>
 <tr class="odd">
 <td align="left">A</td>
 <td align="left">Adult</td>
@@ -534,8 +510,8 @@ Pollock.</td>
 <table>
 <thead>
 <tr class="header">
-<th align="left">gear</th>
-<th align="left">gear_description</th>
+<th align="left">GEAR</th>
+<th align="left">GEAR_DESCRIPTION</th>
 </tr>
 </thead>
 <tbody>
@@ -544,12 +520,36 @@ Pollock.</td>
 <td align="left">3meter Beam Trawl</td>
 </tr>
 <tr class="even">
+<td align="left">Bongo153</td>
+<td align="left">Bongo net with 153um mesh</td>
+</tr>
+<tr class="odd">
+<td align="left">Bongo333</td>
+<td align="left">Bongo net with 333um mesh</td>
+</tr>
+<tr class="even">
+<td align="left">Bongo505</td>
+<td align="left">Bongo net with 505um mesh</td>
+</tr>
+<tr class="odd">
+<td align="left">Bongo80</td>
+<td align="left">Bongo net with 80um mesh</td>
+</tr>
+<tr class="even">
 <td align="left">CAN</td>
 <td align="left">300 headrope</td>
 </tr>
 <tr class="odd">
+<td align="left">CAT</td>
+<td align="left">Temperature Logging. Often paired with Bongos</td>
+</tr>
+<tr class="even">
 <td align="left">CTD</td>
 <td align="left">Temperature Logger/Water Sampler.</td>
+</tr>
+<tr class="odd">
+<td align="left">Juday</td>
+<td align="left">Zooplankton sampling net</td>
 </tr>
 <tr class="even">
 <td align="left">MAR</td>
@@ -564,32 +564,8 @@ Pollock.</td>
 <td align="left">Nordic</td>
 </tr>
 <tr class="odd">
-<td align="left">CAT</td>
-<td align="left">Temperature Logging. Often paired with Bongos</td>
-</tr>
-<tr class="even">
-<td align="left">Bongo333</td>
-<td align="left">Bongo net with 333um mesh</td>
-</tr>
-<tr class="odd">
-<td align="left">Bongo505</td>
-<td align="left">Bongo net with 505um mesh</td>
-</tr>
-<tr class="even">
-<td align="left">Bongo153</td>
-<td align="left">Bongo net with 153um mesh</td>
-</tr>
-<tr class="odd">
-<td align="left">Juday</td>
-<td align="left">Zooplankton sampling net</td>
-</tr>
-<tr class="even">
 <td align="left">PairoVET</td>
 <td align="left">Zooplankton sampling net</td>
-</tr>
-<tr class="odd">
-<td align="left">Bongo80</td>
-<td align="left">Bongo net with 80um mesh</td>
 </tr>
 </tbody>
 </table>
@@ -600,27 +576,11 @@ Pollock.</td>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">gear_name</th>
-<th align="left">gear_name_description</th>
+<th align="left">GEAR_NAME</th>
+<th align="left">GEAR_NAME_DESCRIPTION</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">300</td>
-<td align="left">Can Trawl 300</td>
-</tr>
-<tr class="even">
-<td align="left">300400</td>
-<td align="left">Can Trawl 300 headrope, 400 sidewalls</td>
-</tr>
-<tr class="odd">
-<td align="left">400580</td>
-<td align="left">Can Trawl 400 headrope, 580 sidewalls</td>
-</tr>
-<tr class="even">
-<td align="left">400601</td>
-<td align="left">Can Trawl 400 headrope, 601 sidewalls</td>
-</tr>
 <tr class="odd">
 <td align="left">16 Plus</td>
 <td align="left">Sea-Bird Electronics 16 Plus</td>
@@ -645,6 +605,14 @@ sensors</td>
 auxilliary sensors</td>
 </tr>
 <tr class="even">
+<td align="left">300</td>
+<td align="left">Can Trawl 300</td>
+</tr>
+<tr class="odd">
+<td align="left">300400</td>
+<td align="left">Can Trawl 300 headrope, 400 sidewalls</td>
+</tr>
+<tr class="even">
 <td align="left">39</td>
 <td align="left">Sea-Bird Electronics 39 for temperature and pressure
 measurements typically collected on headrope and footrope of trawl
@@ -657,43 +625,51 @@ pressure measurements typically collected on headrope and footrope of
 trawl net (updated version of 39, came out in Feb. 2014)</td>
 </tr>
 <tr class="even">
+<td align="left">3MBT</td>
+<td align="left">3 meter wide small mesh Beam Trawl</td>
+</tr>
+<tr class="odd">
+<td align="left">400580</td>
+<td align="left">Can Trawl 400 headrope, 580 sidewalls</td>
+</tr>
+<tr class="even">
+<td align="left">400601</td>
+<td align="left">Can Trawl 400 headrope, 601 sidewalls</td>
+</tr>
+<tr class="odd">
 <td align="left">49</td>
 <td align="left">Sea-Bird Electronics 49 CTD (FastCat) profiler</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">911</td>
 <td align="left">Sea-Bird Electronics 9 CTD with 11 deck unit, real time
 data acquisition with auxilliary sensors</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">917</td>
 <td align="left">Sea-Bird Electronics 911 CTD with17Plus profiler with
 auxilliary sensors and V2 Searam for non-real time data acquisition and
 bottle firing</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Bongo153</td>
 <td align="left">20 cm diameter, mesh 153 microns.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Bongo333</td>
 <td align="left">60cm diameter, mesh 333 microns.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Bongo505</td>
 <td align="left">60 cm diameter, mesh 505 microns.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Bongo80</td>
 <td align="left">80 cm diameter, mesh 153 microns.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Juday</td>
 <td align="left">Juday net, 36 cm diameter, mesh 168 microns.</td>
-</tr>
-<tr class="even">
-<td align="left">PairoVET</td>
-<td align="left">PairoVET net, 25 cm diameter, mesh 153 microns.</td>
 </tr>
 <tr class="odd">
 <td align="left">MAR</td>
@@ -701,16 +677,16 @@ bottle firing</td>
 pocket nets)</td>
 </tr>
 <tr class="even">
-<td align="left">3MBT</td>
-<td align="left">3 meter wide small mesh Beam Trawl</td>
+<td align="left">NETS156</td>
+<td align="left">Net Systems 156 oblique/midwater trawl.</td>
 </tr>
 <tr class="odd">
 <td align="left">Nor264</td>
 <td align="left">Nordic 264 small mesh codend surface trawl net.</td>
 </tr>
 <tr class="even">
-<td align="left">NETS156</td>
-<td align="left">Net Systems 156 oblique/midwater trawl.</td>
+<td align="left">PairoVET</td>
+<td align="left">PairoVET net, 25 cm diameter, mesh 153 microns.</td>
 </tr>
 </tbody>
 </table>
@@ -722,9 +698,9 @@ pocket nets)</td>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">gear_performance</th>
-<th align="left">gear_performance_name</th>
-<th align="left">performance_description</th>
+<th align="left">GEAR_PERFORMANCE</th>
+<th align="left">GEAR_PERFORMANCE_NAME</th>
+<th align="left">PERFORMANCE_DESCRIPTION</th>
 </tr>
 </thead>
 <tbody>
@@ -762,8 +738,8 @@ fishing. Should be excluded from analyses</td>
 <table>
 <thead>
 <tr class="header">
-<th align="left">length_type</th>
-<th align="left">length_description</th>
+<th align="left">LENGTH_TYPE</th>
+<th align="left">LENGTH_DESCRIPTION</th>
 </tr>
 </thead>
 <tbody>
@@ -797,9 +773,9 @@ fishing. Should be excluded from analyses</td>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="right">nbs_strata</th>
-<th align="left">strata_name</th>
-<th align="left">strata_description</th>
+<th align="right">NBS_STRATA</th>
+<th align="left">STRATA_NAME</th>
+<th align="left">STRATA_DESCRIPTION</th>
 </tr>
 </thead>
 <tbody>
@@ -867,7 +843,7 @@ fishing. Should be excluded from analyses</td>
 </tr>
 <tr class="odd">
 <td align="right">12</td>
-<td align="left">Lower Outter</td>
+<td align="left">Lower Outer</td>
 <td align="left">South of 63.6 and West of 171.1</td>
 </tr>
 </tbody>
@@ -880,9 +856,9 @@ fishing. Should be excluded from analyses</td>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="right">oceanographic_domain</th>
-<th align="left">oceanographic_domain_description</th>
-<th align="left">notes</th>
+<th align="right">OCEANOGRAPHIC_DOMAIN</th>
+<th align="left">OCEANOGRAPHIC_DOMAIN_DESCRIPTION</th>
+<th align="left">NOTES</th>
 </tr>
 </thead>
 <tbody>
@@ -916,8 +892,8 @@ fishing. Should be excluded from analyses</td>
 <table>
 <thead>
 <tr class="header">
-<th align="left">sex</th>
-<th align="left">sex_description</th>
+<th align="left">SEX</th>
+<th align="left">SEX_DESCRIPTION</th>
 </tr>
 </thead>
 <tbody>
@@ -943,9 +919,9 @@ fishing. Should be excluded from analyses</td>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">tow_type</th>
-<th align="left">tow_type_name</th>
-<th align="left">tow_type_description</th>
+<th align="left">TOW_TYPE</th>
+<th align="left">TOW_TYPE_NAME</th>
+<th align="left">TOW_TYPE_DESCRIPTION</th>
 </tr>
 </thead>
 <tbody>
@@ -1001,9 +977,9 @@ to surface</td>
 <table>
 <thead>
 <tr class="header">
-<th align="right">vessel_code</th>
-<th align="left">vessel_alpha_code</th>
-<th align="left">vessel_name</th>
+<th align="right">VESSEL_CODE</th>
+<th align="left">VESSEL_ALPHA_CODE</th>
+<th align="left">VESSEL_NAME</th>
 </tr>
 </thead>
 <tbody>
@@ -1107,9 +1083,9 @@ to surface</td>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">code</th>
-<th align="left">description</th>
-<th align="right">foci_code</th>
+<th align="left">CODE</th>
+<th align="left">DESCRIPTION</th>
+<th align="right">FOCI_CODE</th>
 </tr>
 </thead>
 <tbody>
