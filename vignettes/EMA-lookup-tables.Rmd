@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+knitr::opts_chunk$set(include = FALSE)
 library(kableExtra)
 library(dplyr)
 library(knitr)
