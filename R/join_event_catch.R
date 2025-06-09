@@ -64,7 +64,7 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
   }
 
   # Optional survey region filter - defaults to survey_region = NA
-  # this is a way of dealing with the "NA" in region column that get generated when we created region above
+  # this is a way of dealing with the "NA" in region column that get generated when we created region in the ema_event pull
   # these four lines can be removed if the lat/lon information gets fixed at those four stations
   if(all(survey_region %in% unique(stats::na.omit(event$region)))){
     survey_vec <- c(survey_region)
@@ -120,9 +120,15 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
     dplyr::left_join(event_parameters, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
     dplyr::mutate(haulback_time = lubridate::ymd_hms(haulback_time),
                   eq_time = lubridate::ymd_hms(eq_time),
-                  tow_duration = difftime(haulback_time, eq_time, units = "mins")) |>
+                  gear_in_time = lubridate::ymd_hms(gear_in_time),
+                  gear_out_time = lubridate::ymd_hms(gear_out_time),
+                  tow_duration = ifelse(tow_type %in% c("S", "M", "L"),
+                                        difftime(haulback_time, eq_time, units = "mins"),
+                                        ifelse(tow_type %in% c("O"),
+                                               difftime(gear_in_time, gear_out_time, units = "mins", NA)))) |>
     dplyr::select(sample_year, cruise_id, event_code, station_id, gear, gear_performance, tow_type, nbs_strata, oceanographic_domain,
-                  large_marine_ecosystem, region, eq_latitude, eq_longitude,
+                  large_marine_ecosystem, region, eq_time, eq_latitude, eq_longitude, gear_in_time, gear_in_latitude, gear_in_longitude,
+                  gear_out_time, gear_out_latitude, gear_out_longitude, haulback_time, haulback_latitude, haulback_longitude,
                   effort, effort_units, tow_duration,
                   species_tsn, common_name, scientific_name, lhs_code, total_catch_number, total_catch_weight)
 
@@ -142,7 +148,12 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
                     & region %in% survey_vec) |>
       dplyr::mutate(haulback_time = lubridate::ymd_hms(haulback_time),
                     eq_time = lubridate::ymd_hms(eq_time),
-                    tow_duration = difftime(haulback_time, eq_time, units = "mins"))
+                    gear_in_time = lubridate::ymd_hms(gear_in_time),
+                    gear_out_time = lubridate::ymd_hms(gear_out_time),
+                    tow_duration = ifelse(tow_type %in% c("S", "M", "L"),
+                      difftime(haulback_time, eq_time, units = "mins"),
+                      ifelse(tow_type %in% c("O"),
+                             difftime(gear_in_time, gear_out_time, units = "mins", NA))))
 
 
     # Creates a unique list of species_tsn's plus LHS_Codes
@@ -154,8 +165,12 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
     # Take the zero grid of tsn and lhs and join in event information (filtered above)
     zero_event_join <- dplyr::left_join(zero_grid, subset(event2, select=c("station_id", "event_code", "gear",
                                                                          "cruise_id","sample_year",
-                                                                         "tow_type","gear_performance","region",
-                                                                         "eq_latitude","eq_longitude","tow_duration")),
+                                                                         "tow_type","gear_performance","region", "eq_time",
+                                                                         "eq_latitude","eq_longitude", "gear_in_time",
+                                                                         "gear_in_latitude", "gear_in_longitude",
+                                                                         "gear_out_time", "gear_out_latitude", "gear_out_longitude",
+                                                                         "haulback_time", "haulback_latitude", "haulback_longitude",
+                                                                         "tow_duration")),
                                         by=c("station_id", "event_code", "gear"))
     # Add event parameter fields to the zero catch-events
     zero_event_param_join <- dplyr::left_join(zero_event_join ,subset(event_parameters,
