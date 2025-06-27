@@ -10,6 +10,10 @@ To install the package, please run the line below. This package is regularly bei
 
 `devtools::install_github("afsc-ema/EMAdownload", quiet = F, force = T, dependencies=TRUE, build_vignettes=TRUE)`
 
+If you get errors related to the package being in use and that it will not be re-installed, try detaching it first and then re-installing it (above):
+
+`detach("package:EMAdownload", unload = T)`
+
 ## Data Functions:
 This package has functions to automate the querying and formatting of EMA datasets. For beginner users, we recommend using the following two functions: 
 
