@@ -84,7 +84,7 @@ Compared to event tables, catch table has less nuance.  The table has a primary 
 
 #### Species TSN
 
-These are numeric representations of scientific name and common name, as found at https://itis.gov/ It should be noted that these codes are not always 100% up-to-date, however the record integrity of species names across the catch and fish tables are.  I.e. it is a better practice to look up a specific species of interest from the taxa data table (get_ema_taxonomy() or species tsn table in the look-up vignette) than it is to look the species up in ITIS, as classifications are updated but these updates do not always reach our taxonomy table.  If a species catch record exists in our database, it will be in our taxa table.  
+These are numeric representations of scientific name and common name, as found on ITIS[https://itis.gov/]. It should be noted that these codes are **not always 100% up-to-date**, however the record integrity of species names across the catch and fish tables are (i.e., it is a better practice to look up a specific species of interest from the taxa data table (get_ema_taxonomy() or species tsn table in the look-up vignette)) than it is to look the species up in ITIS, as classifications are updated but these updates do not always reach our taxonomy table.  If a species catch record exists in our database, it will be in our taxa table.  
 
 #### LHS Codes
 
