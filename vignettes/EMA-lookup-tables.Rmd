@@ -14,18 +14,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-knitr::opts_chunk$set(include = FALSE)
+```{r setup, include = FALSE}
+#knitr::opts_chunk$set(include = FALSE)
 library(kableExtra)
 library(dplyr)
 library(knitr)
 
-devtools::load_all()
+#devtools::load_all()
 tables <- EMAdownload:::tables
 
 ```
 
-This document contains lookup tables for EMA data codes. Data are pulled from internal data. This report was last run `r Sys.Date()`
+This document contains lookup tables for EMA data codes. Data are pulled from internal data based off of EMA internal database. This report was last run `r Sys.Date()`
 
 ## Lookup tables
 
