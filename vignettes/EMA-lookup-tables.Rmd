@@ -21,6 +21,8 @@ library(dplyr)
 library(knitr)
 
 devtools::load_all()
+tables <- EMAdownload:::tables
+
 ```
 
 This document contains lookup tables for EMA data codes. Data are pulled from internal data. This report was last run `r Sys.Date()`
@@ -57,10 +59,13 @@ This document contains lookup tables for EMA data codes. Data are pulled from in
 # for (i in 1:length(table_vec)) {
 #   tables[[i]] <- download_lut(table_vec[i])
 # }
+#
+# usethis::use_data(tables, internal = TRUE)
+
 
 ```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 
 for (i in seq_along(tables)) {
 

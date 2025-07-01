@@ -7,7 +7,7 @@
 get_ema_fish()
 }
 \description{
-This function pulls specimem level data with associated event information from
+This function pulls specimen level data with associated event information from
 ecosystem survey data (from EMA surveys) from the AKFIN data server.
 It includes parameters to control start and end year, gear type, and TSN (species code).
 
