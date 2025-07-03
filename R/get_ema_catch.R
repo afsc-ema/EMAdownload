@@ -14,7 +14,9 @@ get_ema_catch <- function() {
   # use jasonlite and the parameters we are setting above to pull data
   data <- jsonlite::fromJSON(
     httr::content(response, type = "text", encoding = "UTF-8")) |>
-    dplyr::bind_rows()
+    dplyr::bind_rows() |>
+    dplyr::rename_with(tolower) |> # rename all to lower case
+    dplyr::mutate(gear = ifelse(gear == "NOR64", "Nor64", gear)) # fix typo in the db
 
   return(data)
 

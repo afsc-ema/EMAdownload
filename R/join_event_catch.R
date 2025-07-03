@@ -38,10 +38,9 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
     dplyr::mutate(gear = ifelse(gear == "NOR64", "Nor64", gear)) |>
     ## Filter out aborted and unsatisfactory tows.
     dplyr::filter (!gear_performance %in% c("A","U"))
-  catch <- get_ema_catch() |> dplyr::rename_with(tolower) |>
-    dplyr::mutate(gear = ifelse(gear == "NOR64", "Nor64", gear)) # fix gear typo in db
-  taxa <- get_ema_taxonomy() |> dplyr::rename_with(tolower)
-  event_parameters <- get_ema_event_parameters() |> dplyr::rename_with(tolower)
+  catch <- get_ema_catch()
+  taxa <- get_ema_taxonomy()
+  event_parameters <- get_ema_event_parameters()
   }
 
   ###saves list of data files to global environment

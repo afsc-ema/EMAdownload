@@ -38,11 +38,10 @@ join_event_fish <- function(start_year=2002, end_year=3000, survey_region=NA, ts
 
   # download tables from AKFIN
   event <- get_ema_event() |> # tolower done in get_ema_event, same with adding region
-    dplyr::mutate(gear = ifelse(gear == "NOR64", "Nor64", gear)) |> # fix gear typo in db
     dplyr::filter(!(gear_performance %in% c("A", "U")))
-  fish <- get_ema_fish() |> dplyr::rename_with(tolower)
-  taxa <- get_ema_taxonomy() |> dplyr::rename_with(tolower)
-  event_parameters <- get_ema_event_parameters() |> dplyr::rename_with(tolower)
+  fish <- get_ema_fish()
+  taxa <- get_ema_taxonomy()
+  event_parameters <- get_ema_event_parameters()
   }
 
   # saves a list of data files to the global environment so you don' thave to download everytime

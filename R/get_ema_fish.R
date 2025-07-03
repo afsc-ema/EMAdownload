@@ -21,7 +21,8 @@ get_ema_fish <- function() {
   # use jasonlite and the parameters we are setting above to pull data
   data <- jsonlite::fromJSON(
     httr::content(response, type = "text", encoding = "UTF-8")) |>
-    dplyr::bind_rows()
+    dplyr::bind_rows() |>
+    rename_with(tolower)
 
   return(data)
 
