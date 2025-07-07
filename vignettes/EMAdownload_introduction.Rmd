@@ -1,5 +1,5 @@
 ---
-title: "EMA Data Overview"
+title: "EMAdownload_introduction"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to EMAdownload}

@@ -21,7 +21,7 @@ get_ema_event<- function() {
       #gear = ifelse(gear == "NOR64", "Nor64", gear), # fix gear typo in db
                   ###This code adds a "region" field.  Note that this region only effectively works for trawls since CTD/CAT stations store lat in a different field.
                   # There's one NETS trawl from 2016 but it's aborted so I don't care about it.
-                  large_marine_ecosystem = ifelse(large_marine_ecosystem == "Chuckchi", "Chukchi", large_marine_ecosystem),
+                  #large_marine_ecosystem = ifelse(large_marine_ecosystem == "Chuckchi", "Chukchi", large_marine_ecosystem),
                   region = dplyr::case_when(eq_latitude <= 59.9 & !(large_marine_ecosystem == "GOA") ~ "SEBS",
                                             eq_latitude > 59.9 & eq_latitude <= 65.5 & !(large_marine_ecosystem == "GOA") ~ "NBS",
                                             eq_latitude > 65.5 ~ "Chukchi",
