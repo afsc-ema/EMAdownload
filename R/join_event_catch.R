@@ -35,7 +35,6 @@ join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, t
 
   # download tables from AKFIN
   event <- get_ema_event() |>
-    dplyr::mutate(gear = ifelse(gear == "NOR64", "Nor64", gear)) |>
     ## Filter out aborted and unsatisfactory tows.
     dplyr::filter (!gear_performance %in% c("A","U"))
   catch <- get_ema_catch()
