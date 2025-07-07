@@ -1,7 +1,7 @@
 # EMAdownload
 R package built to query and join survey data from EMA survey datasets from AKFIN APIs.  Currently catch and specimen data are operational, with CTD and other oceanographic data to follow.
 
-Note: last full load date of EMA data to AKFIN was 1-30-2025.
+Note: last full load date of EMA data to AKFIN was 6-30-2025.
 
 For a list of vignettes, please use `browseVignettes(EMAdownload)`
 
