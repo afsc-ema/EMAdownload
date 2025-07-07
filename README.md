@@ -26,11 +26,11 @@ use `vignette(join_event_catch_guide,package="EMAdownload")`
 
 For users experienced with EMA data and the nuances of the data, you can set up your own filters and joins using the individual data obtained with the following functions:
 
-  - get_ema_catch (catch data) 
+  - get_ema_event (sampling events) 
   
-  - get_ema_event(sampling events) 
-  
-  - get_ema_event_parameters (post-sampling calculated event values (i.e. effort, footrope depth)) 
+  - get_ema_event_parameters (post-sampling calculated event values (i.e. effort, footrope depth))
+    
+  - get_ema_catch (catch data)
   
   - get_ema_fish (specimen data) 
   
@@ -42,7 +42,7 @@ built into the functions.  All other function calls simply query the API link fo
 ## Data Structure:
 
 EMA survey data are nuanced, as survey design and sample processing has changed throughout the timeseries. Please use
-`vignette(EMAdownload_introduction,package="EMAdownload")` to see a full write-up of all important data concepts.
+`vignette(EMAdownload_introduction,package="EMAdownload")` to see a in-progress write-up of all important data concepts.
 
 
 For any issues, please post them at https://github.com/afsc-ema/EMAdownload/issues
