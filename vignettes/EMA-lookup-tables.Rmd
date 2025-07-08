@@ -30,7 +30,12 @@ This document contains lookup tables for EMA data codes. Data are pulled from in
 ## Lookup tables
 
 ```{r eval=FALSE, include=FALSE}
-# connect to akfin
+# In order to update this script of tables you can do several things.
+#' 1. connect to akfin directly with a user name and password and pull the updated LUT tables from there
+#' 2. connect to the most recent access database within NOAA ABL internal drive (must be on network to do) and update tables
+#' 
+#' Regardless of the method you then  update the internal tables (usethis::use_data(internal = T)) below to store tables internal to the package
+# 1. connect to akfin
 # con <- dbConnect(odbc::odbc(), "akfin", UID=getPass(msg="USER NAME"), PWD=getPass())
 # 
 # download_lut <- function(table) {
