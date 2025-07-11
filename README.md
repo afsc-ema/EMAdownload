@@ -3,8 +3,6 @@ R package built to query and join survey data from EMA survey datasets from AKFI
 
 Note: last full load date of EMA data to AKFIN was 6-30-2025.
 
-For a list of vignettes, please use `browseVignettes(EMAdownload)`
-
 ## Package Installation Instructions:
 To install the package, please run the line below. This package is regularly being updated as functionality is improved and expanded, so we recommend updating frequently.
 
@@ -14,13 +12,15 @@ If you get errors related to the package being in use and that it will not be re
 
 `detach("package:EMAdownload", unload = T)`
 
+For a list of vignettes, please use `browseVignettes("EMAdownload")`
+
 ## Data Functions:
 This package has functions to automate the querying and formatting of EMA datasets. For beginner users, we recommend using the following two functions: 
 
 - join_event_catch() for catch data. This function queries event and catch data, then passes any filters entered as arguments for the function to filter respective data products before joining them together. Arguments include year range, survey region, gear used, trawl method, and species code/lhs.  
 
 For a detailed breakdown of this, 
-use `vignette(join_event_catch_guide,package="EMAdownload")`
+use `vignette("join_event_catch_guide", package="EMAdownload")`
 
 - join_event_fish() for specimen data  
 
@@ -42,7 +42,7 @@ built into the functions.  All other function calls simply query the API link fo
 ## Data Structure:
 
 EMA survey data are nuanced, as survey design and sample processing has changed throughout the timeseries. Please use
-`vignette(EMAdownload_introduction,package="EMAdownload")` to see a in-progress write-up of all important data concepts.
+`vignette("EMAdownload_introduction", package="EMAdownload")` to see a in-progress write-up of all important data concepts.
 
 
 For any issues, please post them at https://github.com/afsc-ema/EMAdownload/issues
