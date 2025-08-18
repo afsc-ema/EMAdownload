@@ -108,7 +108,19 @@ When salmon are assigned a LHS designation, they are assigned either immature, o
 
 #### Length Type
 
-This field tracks the specific style of length measurements used for the given species.  For the most part, length measurement protocols have not changed for a given species+life history, with one noteworthy exception. **In the early 2010s, there was a shift from measuring lengths for age-0 gadids from TOTAL LENGTH to STANDARD LENGTH**.  So users should be aware of this; documentation for conversion does exist on a species-by-species basis.
+This field tracks the specific style of length measurements used for the given species.  For the most part, length measurement protocols have not changed for a given species+life history, with one noteworthy exception. **In the early 2010s, there was a shift from measuring lengths for age-0 gadids from TOTAL LENGTH to STANDARD LENGTH**.  So users should be aware of this; Ben Laurel provided conversions for Walleye pollock and Pacific cod (below)
+The conversions for Pollock (Gadus chalcogrammus) in the 30-100 mm range are:
+
+TL(mm) = -0.25145 +1.08123*SL(mm)
+
+SL(mm) = 0.29353 + 0.92359*TL(mm)
+
+The conversions for Pacific cod (Gadus macrocephalus) in the 30-100mm range are
+
+TL(mm) = 0.26250 + 1.0769*SL(mm)
+
+SL(mm) = 0.06258 + 0.92843*TL(mm) 
+
 
 #### Special studies fields
 
