@@ -47,7 +47,7 @@ This document contains lookup tables for EMA data codes. Data are pulled from in
 # }
 # 
 # table_vec <- c("LUT_BSIERP_REGION",
-# "LUT_FISH_LIFE_HISTORY_STAGE",
+# "LUT_CATCH_LIFE_HISTORY_STAGE",
 # "LUT_GEAR",
 # "LUT_GEAR_DESCRIPTION",
 # "LUT_GEAR_PERFORMANCE",
@@ -57,7 +57,8 @@ This document contains lookup tables for EMA data codes. Data are pulled from in
 # "LUT_SEX",
 # "LUT_TOW_TYPE",
 # "LUT_VESSEL_CODE",
-# "LUT_ZOOP_STAGE_CODE")
+# "LUT_ZOOP_STAGE_CODE",
+# "LUT_TRAWL_SPECIES_TSN")
 # 
 # tables<-list()
 # 
@@ -65,7 +66,7 @@ This document contains lookup tables for EMA data codes. Data are pulled from in
 #   tables[[i]] <- download_lut(table_vec[i])
 # }
 #
-# usethis::use_data(tables, internal = TRUE)
+# usethis::use_data(tables, internal = TRUE, overwrite = TRUE)
 
 
 ```
