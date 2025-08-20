@@ -3,8 +3,10 @@ title: "EMA lookup tables"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{EMA lookup tables}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -16,12 +18,15 @@ knitr::opts_chunk$set(
 
 ```{r setup, include = FALSE}
 #knitr::opts_chunk$set(include = FALSE)
-library(kableExtra)
+#library(kableExtra)
 library(dplyr)
 library(knitr)
+library(devtools)
 
-#devtools::load_all()
-tables <- EMAdownload:::tables
+devtools::load_all() #doesn't function as expected
+my_tables # how you load internal data, but doesn't work well with overwriting
+#utils::data("data/tables") # how to load external data
+
 
 ```
 
@@ -73,11 +78,11 @@ This document contains lookup tables for EMA data codes. Data are pulled from in
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 
-for (i in seq_along(tables)) {
+for (i in seq_along(my_tables)) {
 
     print(
-    kable(
-      tables[[i]],
+    knitr::kable(
+      my_tables[[i]],
       format = "markdown"
     )
   )
