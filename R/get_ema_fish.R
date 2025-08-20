@@ -22,7 +22,7 @@ get_ema_fish <- function() {
   data <- jsonlite::fromJSON(
     httr::content(response, type = "text", encoding = "UTF-8")) |>
     dplyr::bind_rows() |>
-    rename_with(tolower)
+    dplyr::rename_with(tolower)
 
   return(data)
 

@@ -21,8 +21,8 @@
 #' See look up table for full explanation of category. Default to "S" or surface tow.
 #' @returns Returns a data frame of event information with catch data
 #' @export
-#' @examples df <- join_event_catch(start_year=2002,end_year=2024,survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
-
+#' @examples df <- join_event_catch(start_year=2002,end_year=2024,
+#' survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
 
 join_event_catch <- function(start_year=2002, end_year=3000, survey_region=NA, tsn=NA,lhs=NA,
                              gear= c("CAN","Nor264"), trawl_method="S", catch0=FALSE) {

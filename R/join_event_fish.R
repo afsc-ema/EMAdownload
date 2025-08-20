@@ -26,7 +26,6 @@
 #'
 #' @export
 
-
 join_event_fish <- function(start_year=2002, end_year=3000, survey_region=NA, tsn=NA,
                              gear=c("CAN", "Nor264"), trawl_method = "S")  {
 

@@ -48,5 +48,6 @@ It includes parameters to control start and end year, gear type, survey region, 
 lhs code (life history stage), and whether or not to calculate catch0 (true/false)
 }
 \examples{
-df <- join_event_catch(start_year=2002,end_year=2024,survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
+df <- join_event_catch(start_year=2002,end_year=2024,
+survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
 }
