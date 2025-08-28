@@ -5,7 +5,7 @@
 \title{Get EMA fish specimen data with event information}
 \usage{
 join_event_fish(
-  start_year = 2002,
+  start_year = 2003,
   end_year = 3000,
   survey_region = NA,
   tsn = NA,

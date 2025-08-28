@@ -5,7 +5,7 @@
 \title{Get EMA catch and event data}
 \usage{
 join_event_catch(
-  start_year = 2002,
+  start_year = 2003,
   end_year = 3000,
   survey_region = NA,
   tsn = NA,
@@ -16,7 +16,7 @@ join_event_catch(
 )
 }
 \arguments{
-\item{start_year}{Optional filter for start year, valid range 2002 to present, defaults to 2002}
+\item{start_year}{Optional filter for start year, valid range 2003 to present, defaults to 2003}
 
 \item{end_year}{Optional filter for end year, valid range 2002 to present, defaults to 3000}
 

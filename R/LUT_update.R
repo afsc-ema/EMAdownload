@@ -4,12 +4,12 @@
 ## it should be getting from this script.
 
 # library(RODBC)
-
-# connect to akfin
-# con <- dbConnect(odbc::odbc(), "akfin", UID=getPass(msg="USER NAME"), PWD=getPass())
-# or connect to the databased on access
+#
+# ## connect to akfin
+# ## con <- dbConnect(odbc::odbc(), "akfin", UID=getPass(msg="USER NAME"), PWD=getPass())
+# ## or connect to the databased on access
 # con <- odbcConnectAccess2007("Y:/ABL_EMA/DATABASES/MASTERS/EMA_Database_08.07.25.accdb")
-
+#
 # download_lut <- function(table) {
 #   dbFetch(dbSendQuery(con,
 #                       paste0("select * from ema.",table)))%>%
@@ -34,7 +34,8 @@
 #                "LUT_SEX",
 #                "LUT_TOW_TYPE",
 #                "LUT_VESSEL_CODE",
-#                "LUT_ZOOP_STAGE_CODE")
+#                "LUT_ZOOP_STAGE_CODE",
+#                "LUT_SALMON_MATURITY")
 #
 # my_tables<-list()
 #
@@ -43,27 +44,28 @@
 # }
 #
 # odbcClose(con)
-
-# we want to be able to  use this data (lut) as internal data in the package
-# so this write it to the internal data,
-
-# 8/19/25 try reading it as external data
-# usethis::use_data(tables, overwrite = TRUE)
-# create raw data file to put this script (tables generating script)
-# usethis::use_data_raw()
-
-
-# new_env <- new.env(hash = F)
-# load("R/sysdata.rda", envir = new_env)
-# new_env$tables <- tables
 #
-# new_env$tables
-
-# save(list = names(new_env),
-#      file = "R/sysdata.rda",
-#      envir = new_env)
-
-
+# # we want to be able to  use this data (lut) as internal data in the package
+# # so this write it to the internal data,
+#
+# # 8/19/25 try reading it as external data
+# # usethis::use_data(tables, overwrite = TRUE)
+# # create raw data file to put this script (tables generating script)
+# # usethis::use_data_raw()
+#
+#
+# # new_env <- new.env(hash = F)
+# # load("R/sysdata.rda", envir = new_env)
+# # new_env$tables <- tables
+# #
+# # new_env$tables
+#
+# # save(list = names(new_env),
+# #      file = "R/sysdata.rda",
+# #      envir = new_env)
+#
+#
 # usethis::use_data(my_tables, internal = TRUE, overwrite = TRUE)
-# length(EMAdownload:::tables)
+#
+# length(my_tables)
 

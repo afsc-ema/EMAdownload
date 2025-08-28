@@ -11,7 +11,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    devtools
 VignetteBuilder: knitr
 Imports: 
     magrittr,
@@ -20,8 +21,7 @@ Imports:
     lubridate,
     stats,
     httr,
-    jsonlite,
-    devtools
+    jsonlite
 Depends: 
     R (>= 4.1.0)
 LazyData: true
