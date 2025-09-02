@@ -19,3 +19,4 @@ get_ema_event_parameters <- function() {
   return(data)
 
 }
+

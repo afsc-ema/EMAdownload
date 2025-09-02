@@ -34,22 +34,23 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
   if(all(exists("fish"),exists("event"),exists("event_parameters"),exists("taxa"))) {
     warning("Local data files exist. Formatting file from those exports")
   }else {
+    message("Downloading data... ")
 
   # download tables from AKFIN
   event <- get_ema_event() |> # tolower done in get_ema_event, same with adding region
     dplyr::filter(!(gear_performance %in% c("A", "U")))
-  fish <- get_ema_fish()
+  fsh <- get_ema_fish()
   taxa <- get_ema_taxonomy()
   event_parameters <- get_ema_event_parameters()
   }
 
   # saves a list of data files to the global environment so you don' thave to download everytime
-  df_list <- list(fish, event, event_parameters, taxa)
-  names(df_list) <- c("fish", "event", "event_parameters", "taxa")
+  df_list <- list(fsh, event, event_parameters, taxa)
+  names(df_list) <- c("fsh", "event", "event_parameters", "taxa")
   list2env(df_list, envir=.GlobalEnv)
 
   # gear filter - only allow gears present in catch table
-  if(all(gear %in% unique(fish$gear))){
+  if(all(gear %in% unique(fsh$gear))){
     gear_vec <- c(gear)
   } else {
     stop("Gear type must be CAN, MAR, NETS156, Nor264")
@@ -68,7 +69,7 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
     tsn_vec <- c(tsn)
   } else {
     if(is.na(tsn)) {
-      tsn_vec <- c(unique(fish$species_tsn))
+      tsn_vec <- c(unique(fsh$species_tsn))
       } else {
         stop("Invalid tsn number")
       }
@@ -77,12 +78,12 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
 
 
   # error message if start year not within range
-  if(start_year < 2002) {
-    stop("Start year not within acceptable range, try 2002 - present")
+  if(start_year < 2003) {
+    stop("Start year not within acceptable range, try 2003 - present")
   }
   # error message if end year not within range
-  if(end_year < 2002) {
-    stop("Start year not within acceptable range, try 2002 - present")
+  if(end_year < 2003) {
+    stop("Start year not within acceptable range, try 2003 - present")
   }
 
   # Optional survey region filter - defaults to survey_region = NA
@@ -100,31 +101,42 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
 
   # optional tsn filter
   if(anyNA(tsn_vec)) {
-    fish2 <- fish |>
-      dplyr::left_join(taxa, by="species_tsn")
+    fish2 <- fsh |>
+      dplyr::left_join(taxa, by="species_tsn") |>
+      dplyr::rename(akfind_load_date = akfin_load_date.x,
+                    notes = notes.x) |>
+      dplyr::select(-c(akfin_load_date.y, notes.y))
   } else {
-    fish2 <- fish |>
-      dplyr::inner_join(taxa |> dplyr::filter(species_tsn %in% tsn_vec), by="species_tsn")
+    fish2 <- fsh |>
+      dplyr::inner_join(taxa |> dplyr::filter(species_tsn %in% tsn_vec), by="species_tsn") |>
+      dplyr::rename(akfind_load_date = akfin_load_date.x,
+                    notes = notes.x) |>
+      dplyr::select(-c(akfin_load_date.y, notes.y))
   }
 
   # join into one data frame
   data <- event |>
-    dplyr::filter(sample_year >=start_year &
+    dplyr::filter(sample_year >= start_year &
                     sample_year <= end_year &
                     gear %in% gear_vec &
                     tow_type %in% trawl_vec &
                     region %in% survey_vec) |>
-    dplyr::right_join(fish2, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
+    dplyr::rename(event.notes = notes) |>
+    # fish2 is the specimen level data with the appropriate taxonomic names; because the fish is a left join
+    # we keep all the correct event level info but then get NAs if we have a tsn filter so we have to make sure we filter on the
+    # tsn here too
+    dplyr::left_join(fish2, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
+    dplyr::filter(species_tsn %in% tsn_vec) |>
     dplyr::left_join(event_parameters, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
-    dplyr::rename(notes = notes.y) |>
+    #dplyr::rename(notes = notes.y) |>
     dplyr::select(sample_year, cruise_id, event_code, station_id, gear, gear_performance, tow_type,
-                  nbs_strata, oceanographic_domain,large_marine_ecosystem, region, eq_latitude, eq_longitude,
+                  nbs_strata, oceanographic_domain,large_marine_ecosystem, region, eq_latitude, eq_longitude, event.notes,
                   species_tsn, common_name, scientific_name, lhs_code, salmon_maturity, sex,
                   length, length_type, weight, scale_card_number, scale_card_position, otolith_number,
                   stomach_flag, genetic_number, genetic_flag, notes, fish_number,
                   scale_position_pref_code, gonad_weight, caloric_number, isotope_number, stomach_number, barcode,
                   fat_meter)
 
-  print(paste("Last AKFIN fish table upload date", unique(fish$akfin_load_date)))
+  print(paste("Last AKFIN fish table upload date", unique(fsh$akfin_load_date)))
   return(data)
 }
