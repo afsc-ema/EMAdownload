@@ -31,7 +31,7 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
 
   # if else function looks for "fish", "event", "event_parameters" or "taxa" files in local environment before
   # re-downloading them from AkFIN via the API
-  if(all(exists("fish"),exists("event"),exists("event_parameters"),exists("taxa"))) {
+  if(all(exists("fsh"),exists("event"),exists("event_parameters"),exists("taxa"))) {
     warning("Local data files exist. Formatting file from those exports")
   }else {
     message("Downloading data... ")
