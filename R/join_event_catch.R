@@ -28,13 +28,13 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
                              gear= c("CAN","Nor264"), trawl_method="S", catch0=FALSE) {
   # if else function looks for "cth", "event", "event_parameters" or "taxa" files in local environment before
   # re-downloading them from AkFIN via the API
-  if(all(exists("cth"),exists("event"),exists("event_parameters"),exists("taxa"))) {
+  if(all(exists("cth"),exists("evnt"),exists("event_parameters"),exists("taxa"))) {
     warning("Local data files exist. Formatting file from those exports")
   }else {
 
 
   # download tables from AKFIN
-  event <- get_ema_event() |>
+  evnt <- get_ema_event() |>
     ## Filter out aborted and unsatisfactory tows.
     dplyr::filter (!gear_performance %in% c("A","U"))
   cth <- get_ema_catch()
@@ -43,8 +43,8 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
   }
 
   ###saves list of data files to global environment
-  df_list <- list(cth, event, event_parameters, taxa)
-  names(df_list) <- c("cth", "event", "event_parameters", "taxa")
+  df_list <- list(cth, evnt, event_parameters, taxa)
+  names(df_list) <- c("cth", "evnt", "event_parameters", "taxa")
   list2env(df_list, envir=.GlobalEnv)
 
   # gear filter - only allow gears present in cth table
@@ -55,7 +55,7 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
   }
 
   # option trawl method/tow type
-  if(all(trawl_method %in% unique(event$tow_type))) {
+  if(all(trawl_method %in% unique(evnt$tow_type))) {
     trawl_vec <- c(trawl_method)
   } else {
     stop("Trawl method must be O, V, S, M, L, D, FP, B. See EMA look up tables for tow type descriptions")
@@ -64,11 +64,11 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
   # Optional survey region filter - defaults to survey_region = NA
   # this is a way of dealing with the "NA" in region column that get generated when we created region in the ema_event pull
   # these four lines can be removed if the lat/lon information gets fixed at those four stations
-  if(all(survey_region %in% unique(stats::na.omit(event$region)))){
+  if(all(survey_region %in% unique(stats::na.omit(evnt$region)))){
     survey_vec <- c(survey_region)
   } else {
     if(is.na(survey_region)){
-      survey_vec <- c(unique(event$region))
+      survey_vec <- c(unique(evnt$region))
     } else {
       stop("Survey region must be one or more of: NBS, SEBS, GOA, or Chukchi")
     }
@@ -81,7 +81,7 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
 
 
   # error message if start year not within range
-  if(start_year < 2002 | start_year > max(event$sample_year)) {
+  if(start_year < 2002 | start_year > max(evnt$sample_year)) {
     stop("Start year not within acceptable range, try 2002 - present")
   }
     # error message if end year not within range
@@ -106,7 +106,7 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
 # set up the catch0 ifelse statement
   if(catch0 == FALSE){
   # join into one data frame
-    data <- event |>
+    data <- evnt |>
       dplyr::filter(sample_year >= start_year
              & sample_year <= end_year
              & gear %in% gear_vec
@@ -139,7 +139,7 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
       stop("catch0 cannot be TRUE when tsn=NA. This will produce a data frame of up to 8,667,792 rows.")
     }
     #same event code as above to get sampling events
-    event2 <- event |>
+    event2 <- evnt |>
       dplyr::filter(sample_year >= start_year
                     & sample_year <= end_year
                     & gear %in% gear_vec

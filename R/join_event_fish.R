@@ -31,13 +31,13 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
 
   # if else function looks for "fish", "event", "event_parameters" or "taxa" files in local environment before
   # re-downloading them from AkFIN via the API
-  if(all(exists("fsh"),exists("event"),exists("event_parameters"),exists("taxa"))) {
+  if(all(exists("fsh"),exists("evnt"),exists("event_parameters"),exists("taxa"))) {
     warning("Local data files exist. Formatting file from those exports")
   }else {
     message("Downloading data... ")
 
   # download tables from AKFIN
-  event <- get_ema_event() |> # tolower done in get_ema_event, same with adding region
+  evnt <- get_ema_event() |> # tolower done in get_ema_event, same with adding region
     dplyr::filter(!(gear_performance %in% c("A", "U")))
   fsh <- get_ema_fish()
   taxa <- get_ema_taxonomy()
@@ -45,8 +45,8 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
   }
 
   # saves a list of data files to the global environment so you don' thave to download everytime
-  df_list <- list(fsh, event, event_parameters, taxa)
-  names(df_list) <- c("fsh", "event", "event_parameters", "taxa")
+  df_list <- list(fsh, evnt, event_parameters, taxa)
+  names(df_list) <- c("fsh", "evnt", "event_parameters", "taxa")
   list2env(df_list, envir=.GlobalEnv)
 
   # gear filter - only allow gears present in catch table
@@ -57,7 +57,7 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
   }
 
   # option trawl method/tow type
-  if(all(trawl_method %in% unique(event$tow_type))) {
+  if(all(trawl_method %in% unique(evnt$tow_type))) {
     trawl_vec <- c(trawl_method)
   } else {
     stop("Trawl method must be O, V, S, M, L, D, FP, B. See EMA look up tables for tow type descriptions")
@@ -89,11 +89,11 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
   # Optional survey region filter - defaults to survey_region = NA
   # this is a way of dealing with the "NA" in region column that get generated when we created region above
   # these four lines can be removed if the lat/lon information gets fixed at those four stations
-  if(all(survey_region %in% unique(stats::na.omit(event$region)))){
+  if(all(survey_region %in% unique(stats::na.omit(evnt$region)))){
     survey_vec <- c(survey_region)
   } else {
     if(is.na(survey_region)){
-      survey_vec <- c(unique(event$region))
+      survey_vec <- c(unique(evnt$region))
     } else {
       stop("Survey region must be one or more of: NBS, SEBS, GOA, or Chukchi")
     }
@@ -115,7 +115,7 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
   }
 
   # join into one data frame
-  data <- event |>
+  data <- evnt |>
     dplyr::filter(sample_year >= start_year &
                     sample_year <= end_year &
                     gear %in% gear_vec &
