@@ -14,10 +14,8 @@ get_ema_taxonomy <- function() {
   dat <- jsonlite::fromJSON(resp_txt, flatten = TRUE)
 
   # Replace U+00BF with regular spaces in character columns
-  dat <- dplyr::mutate(
-    dat,
-    dplyr::across(
-      where(is.character),
+  dat <- as.data.frame(dat)%>%
+    dplyr::mutate(dplyr::across(where(is.character),
       ~ gsub("\u00BF", " ", .x, fixed = TRUE)
     )
   )
