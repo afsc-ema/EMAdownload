@@ -97,7 +97,7 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
   } else {
     cth2 <-cth |>
       # inner join with the species tsn from the fxn argument
-      dplyr::inner_join(taxa |> dplyr::filter(species_tsn %in% tsn), by="species_tsn") |>
+      dplyr::inner_join(taxa |> dplyr::filter(species_tsn %in% !!tsn), by="species_tsn") |>
       # LHS filter code next to TSN filter code
       dplyr::filter(dplyr::case_when(any(is.na(lhs)) ~ lhs_code %in% unique(cth$lhs_code),
                                      any(!is.na(lhs)) ~ lhs_code %in% lhs))
