@@ -3,7 +3,8 @@
 #' @description This function pulls ecosystem survey data (from EMA surveys) from the AKFIN data server
 #'
 #' @export
-
+library(dplyr)
+library(stringr)
 
 get_ema_taxonomy <- function() {
   url <- "https://apex.psmfc.org/akfin/data_marts/ema/lut_trawl_species_tsn?"
