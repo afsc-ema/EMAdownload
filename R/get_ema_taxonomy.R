@@ -15,7 +15,7 @@ get_ema_taxonomy <- function() {
 
   # Replace U+00BF with regular spaces in character columns
   dat <- as.data.frame(dat)%>%
-    dplyr::mutate(dplyr::across(where(is.character),
+    dplyr::mutate(across(where(is.character),
       ~ gsub("\u00BF", " ", .x, fixed = TRUE)
     )
   )
