@@ -103,15 +103,13 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
   if(anyNA(tsn_vec)) {
     fish2 <- fsh |>
       dplyr::left_join(taxa, by="species_tsn") |>
-      dplyr::rename(akfind_load_date = akfin_load_date.x,
-                    notes = notes.x) |>
-      dplyr::select(-c(akfin_load_date.y, notes.y))
+      dplyr::rename(notes = notes.x) |>
+      dplyr::select(-c(notes.y))
   } else {
     fish2 <- fsh |>
       dplyr::inner_join(taxa |> dplyr::filter(species_tsn %in% tsn_vec), by="species_tsn") |>
-      dplyr::rename(akfind_load_date = akfin_load_date.x,
-                    notes = notes.x) |>
-      dplyr::select(-c(akfin_load_date.y, notes.y))
+      dplyr::rename(notes = notes.x) |>
+      dplyr::select(-c(notes.y))
   }
 
   # join into one data frame
