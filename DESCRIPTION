@@ -21,7 +21,9 @@ Imports:
     lubridate,
     stats,
     httr,
-    jsonlite
+    jsonlite,
+    stringr,
+    tidyselect
 Depends: 
     R (>= 4.1.0)
 LazyData: true
