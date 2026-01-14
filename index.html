@@ -69,9 +69,13 @@
 <p>If you get errors related to the package being in use and that it will not be re-installed, try detaching it first and then re-installing it (above):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/detach.html" class="external-link">detach</a></span><span class="op">(</span><span class="st">"package:EMAdownload"</span>, unload <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<p>For a list of vignettes, please use</p>
+</div>
+<div class="section level2">
+<h2 id="data-structure">Data Structure:<a class="anchor" aria-label="anchor" href="#data-structure"></a>
+</h2>
+<p>EMA survey data are nuanced, as survey design and sample processing has changed throughout the timeseries. Please use vignettes to see a in-progress write-up of all important data concepts. <a href="https://afsc-ema.github.io/EMAdownload/articles/EMAdownload_introduction.html" class="external-link">Introduction vignette</a></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span><span class="st">"EMAdownload"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"EMAdownload_introduction"</span>, package<span class="op">=</span><span class="st">"EMAdownload"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="data-functions">Data Functions:<a class="anchor" aria-label="anchor" href="#data-functions"></a>
@@ -80,7 +84,9 @@
 <ul>
 <li>join_event_catch() for catch data. This function queries event and catch data, then passes any filters entered as arguments for the function to filter respective data products before joining them together. Arguments include year range, survey region, gear used, trawl method, and species code/lhs.</li>
 </ul>
-<p>For a detailed breakdown of this, use <code><a href="articles/join_event_catch_guide.html">vignette("join_event_catch_guide", package="EMAdownload")</a></code></p>
+<p>For a detailed breakdown of this use</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">"join_event_catch_guide"</span>, <span class="at">package=</span><span class="st">"EMAdownload"</span>)<span class="st">`</span></span></code></pre></div>
+<p>or view the <a href="https://afsc-ema.github.io/EMAdownload/articles/join_event_catch_guide.html" class="external-link">join event catch guide vignette</a></p>
 <ul>
 <li>join_event_fish() for specimen data</li>
 </ul>
@@ -93,11 +99,6 @@
 <li><p>get_ema_taxonomy (species tsn lookup).</p></li>
 </ul>
 <p>Note, at the moment only join_event_catch and join_event_fish have filtering arguments built into the functions. All other function calls simply query the API link for a full and complete datasets and can take a few minutes to download from AKFIN.</p>
-</div>
-<div class="section level2">
-<h2 id="data-structure">Data Structure:<a class="anchor" aria-label="anchor" href="#data-structure"></a>
-</h2>
-<p>EMA survey data are nuanced, as survey design and sample processing has changed throughout the timeseries. Please use <code><a href="articles/EMAdownload_introduction.html">vignette("EMAdownload_introduction", package="EMAdownload")</a></code> to see a in-progress write-up of all important data concepts.</p>
 <p>For any issues, please post them in <a href="https://github.com/afsc-ema/EMAdownload/issues" class="external-link">EMAdownload github issues</a></p>
 </div>
 <div class="section level2">
