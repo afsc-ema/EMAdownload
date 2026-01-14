@@ -1,0 +1,309 @@
+# EMAdownload_introduction
+
+## Introduction
+
+This vignette serves as an introduction the generalized structure of
+Ecosystem Monitoring and Assessment (EMA) data sets. The goal of this
+package is to allow users an easy way to filter and query EMA’s data
+sets in a reproducible way with access to the most up-to-date versions
+of the data sets.
+
+One of the difficulties of utilization of EMA’s data sets is that there
+is a lot of nuance and institutional knowledge required to curate a
+usable data set for a users individual purpose. Survey designs are
+catered to given ecosystem monitoring goals and thus survey sampling
+designs can vary markedly across the time series. This vignette will
+provide a brief overview of the most important nuances that users should
+be aware of when working with these data sets. There will be individual
+vignettes for each function that outline them in more thorough detail.
+
+------------------------------------------------------------------------
+
+### Data Structure Overview
+
+EMA’s database utilizes a hierarchical structure, with parent records
+being each individual sampling event, and child records being data
+values collected from those sampling events. The event table utilizes a
+primary key composed of three fields: **station_id, event_code, and
+gear**. In all cases, when joining child data records with parent event
+records, the join should be done on those three fields (station_id,
+event_code, and gear). When dealing with catch and fish data
+specifically, catch records have parent event records, while individual
+fish records (length/weight) have parent catch records. **You can link
+fish records directly to their event records, but for data validation,
+the parent/child relationship is established with the catch table (thus
+ensuring you do not have fish records at a station where you do not have
+a catch record for that fish).**
+
+The database itself has a wealth of look-up tables for codes that are
+stored within the data tables utilized in this package. Many of these
+codes should be intuitive to the user. The Taxonomic Serial Number (tsn)
+lookup table is directly provided in the package within the EMA look-up
+tables vignette. This table is required because species identifications
+are stored as a numerical key, so to add common name and scientific name
+to your data files, this is included. Please note that the fish tsn
+look-up table is separate from the zooplankton species tsn look-up and
+zooplankton stage code look-up.
+
+------------------------------------------------------------------------
+
+#### Event/Event Parameters Table Overviews
+
+The event and event parameter tables are two tables that contain event
+sampling information collected during sampling or calculated after
+sampling has occurred. Each table uses a primary key of **station_id,
+event_code, and gear**. That means each sampling event at each station
+ID with each gear has a single record (to clarify, there are situations
+where at each station_id+event_code, multiple gears are deployed
+simultaneously, i.e. Bongo & CAT). Whenever you are curating a data set,
+there are many considerations that should be given to the fields
+outlined below to ensure you are not including or excluding records that
+may not belong in your analysis.
+
+##### Gear and tow_type
+
+For trawl derived data: the gear and tow_type fields are two of the most
+critical fields to have a good understanding of for filtering data. In
+almost all circumstances, it is never appropriate to compare catch
+values across tow types given their differences in both area of water
+column sampled and in how the trawl is fished (e.g., a surface trawl
+(tow_type: S) samples a different habitat than an oblique tow (tow_type:
+O)). Similarly, it usually not appropriate to compare different gears
+(see gear_description), at least to the extent reasonably possible.
+Often times, gears fish significantly different enough that their catch
+efficiencies (i.e. mesh diameters, cod-end mesh diameters) make them
+mostly incomparable. This means that users looking to curate a specific
+data set need to be keenly aware of both of these fields. A recommended
+best practice is to start as wide as possible including as many trawl
+methods and gears to capture your area of interest, and then pairing
+that data set down appropriately to follow the rules outlined above.
+
+Generally speaking, most users will be most interested in surface trawl
+data sets as a starting point, given those tows are most consitently
+sampled across our timeseries. However, users should consult the
+tow_type lookup table, as well as the Gear lookup tables, to ensure they
+are querying all of the tows that meet their criteria for analysis.
+
+##### Gear Performance
+
+The three values for this field are S (satisfactory), G (good), and Q
+(questionable). Generally speaking, questionable records are completely
+appropriate to use. It generally indicates that something part of the
+gear did not operate perfectly during fishing, however it was deemed
+insignificant enough to remove the tow. U (unsatisfactory) and A
+(aborted) tows are removed in these package functions during data
+querying so they are not included in these data sets and users should
+not recieve events that were U or A.
+
+##### Haul Dates and Times
+
+Dates and times are in GMT.
+
+##### Latitude/Longitude descriptors
+
+There are several latitude and longitude fields that are included with
+the standard event table. And their exact application is dependent on
+the trawl method conducted. The exact applications are explained below
+by tow type.
+
+###### Surface and Midwater Trawls
+
+Gear In/Gear Out Latitude/Longitude: The lat/long where the gear first
+enters or exists the water, respectively. These fields are generally
+inconsequential for surface and midwater trawls as the net is not
+considered “fishing” between Gear In and EQ, or between Haulback and
+Gear Out.
+
+EQ/Haulback Latitude/Longitude: EQ Lat/long is the point where the net
+is fully deployed and considered “fishing”. Haulback Lat/Long is the
+point where the trawl is considered completed and haulback of the net
+begins. These are generally considered the start and end points for
+these tow types and duration/distance/effort are calculated using these
+two points.
+
+###### Oblique Trawls
+
+Gear In/Gear Out Latitude/Longitude: The lat/long where the gear first
+enters or exists the water, respectively. For oblique tows, the net is
+considered fishing between these two points. Distance and duration are
+calculated between these two points.
+
+EQ/haulback Latitude/Longitude: EQ Lat/Long is the point where the net
+reaches the lowest point of the oblique tow. Haulacbk Lat/Long is the
+point where retrieval of the net from the lowest point begins. The net
+often remains at the lowest point of the tow for a short duration. These
+fields are generally inconsequential for oblique tows.
+
+##### Effort/Effort Units
+
+Effort calculations differ by tow type, with surface and midwater trawls
+using an area swept in square kilometers, while oblique tows use a
+volume filtered in cubic kilometers.
+
+**The calculation for effort for surface trawls** is the average
+horizontal net opening (km) multiplied by the haversine distance
+(greater circle distance) between EQ lat/long and Haulback lat/long
+(km).
+
+**The calculation for effort for oblique trawls** is a calculation of
+the average net opening (km^2) as estimated by maximum trawl wire out
+multiplied by the haversine distance of the tow between Gear In lat/long
+and Gear Out lat/long (km).
+
+##### NBS Strata/BSIERP Region/Oceanographic Domain/Region
+
+These are all classification fields that seek to group stations based on
+area of sampling to allow for a more nuanced analysis. NBS Strata groups
+stations sampled in the NBS by geographic area. Some strata are excluded
+from most analysis due to infrequent sampling. Oceanographic domain
+filters stations based on bathymetry and is primarily used for stations
+in the southern Bering sea. BSIERP regions are a group of 16 marine
+regions of the Bering sea originally established by the Bering Sea
+Integrated Research Program.
+
+The region field seeks to classify each station further into the
+generalized where sampling occurred. That is to say, when looking to
+group stations large scale and finding natural survey break points,
+these regions seek to do that and are done by a latitude classification.
+**Southeastern Bering sea (SEBS) is any station south of 59.9N**.
+**Northern Bering Sea (NBS) is any station between 59.9N and 65.5N**,
+and **Arctic is any station north of 65.5N**. Gulf of Alaska (GOA)
+stations are classified only as GOA.
+
+#### Catch Table Overview
+
+Compared to event tables, catch table has less nuance. The table has a
+primary key of station_id, event_code, gear, species_tsn, and lhs_code.
+This means that for each species plus life history stage at each
+sampling event, there is only a single record. There are only a few
+notes for this table outlined below.
+
+##### Species TSN
+
+These are numeric representations of scientific name and common name, as
+found on ITIS\[<https://itis.gov/>\]. It should be noted that these
+codes are **not always 100% up-to-date**, however the record integrity
+of species names across the catch and fish tables are (i.e., it is a
+better practice to look up a specific species of interest from the taxa
+data table (get_ema_taxonomy() or species tsn table in the look-up
+vignette)) than it is to look the species up in ITIS, as classifications
+are updated but these updates do not always reach our taxonomy table. If
+a species catch record exists in our database, it will be in our taxa
+table.
+
+##### LHS Codes
+
+Life history stage codes are a somewhat **arbitrary classification based
+on historic sorting practices** across the time series for each given
+species. The life history assignments assigned across the time series
+are quite consistent, however their classification are not 100% verified
+by otolith work. Generally speaking, for gadids, Age-0 (A0) is anything
+less than around 100mm. For salmon, juveniles are considered any
+specimen under around 300mm. Users who are interested in seeing the
+length variation of these should examine the length/weight data for
+their species of interest to see how this classification is applied
+across the time series. One recent change that users should note, is the
+change in Pollock LHS classification (see lhs look-up table). Previous
+to 2024, Pollock LHS were age-0, age 1+, but beginning in 2024 field
+estimations of age-0, age-1, and age 2+ are now being used.
+
+##### Subsamples
+
+In almost all use cases, users should only be interested in the
+total_catch_number and total_catch_weight fields from the catch table.
+However, it is worth describing the significance of subsample values. In
+records where the subsample_num/weight are identical to the
+total_num/weight, that simply means that the entire haul was sorted. In
+situations where they are different, it means the entire catch was
+weighed, however only a portion of that catch was sorted, counted, and
+re-weighed. Then, those counts and weights were applied to the total
+weight to estimate total numbers and weights for each species.
+
+##### 0-Catches
+
+When building a data set, users will often be interested in stations
+where a species was, and was not caught. But, because of the
+hierarchical model our database uses, it is not a straightforward
+process to query this. For users who are interested in these values,
+this functionality has been built into the join_event_catch() function.
+Use vignettes(join_event_catch_guide, package=“EMAdownload”) to see
+examples of this.
+
+#### Fish table overview
+
+The last data table that warrants an overview is the fish table. This
+table contains all of the length, weight, and special studies collection
+information for individuals collected and measured aboard the survey.
+
+##### Salmon Maturity
+
+When salmon are assigned a LHS designation, they are assigned either
+immature, or juvenile. However, some maturing salmon are caught aboard
+EMA surveys. Because, for the most part, they are less visually
+identifiable, at the catch level these are the only two classifications
+used for life history stage. However, as part of specimen processing,
+these fish are sexed and assessed a maturity stage. That is assigned
+here as either immature or maturing.
+
+##### Length Type
+
+This field tracks the specific style of length measurements used for the
+given species. For the most part, length measurement protocols have not
+changed for a given species+life history, with one noteworthy exception.
+**In the early 2010s, there was a shift from measuring lengths for age-0
+gadids from TOTAL LENGTH to STANDARD LENGTH**. So users should be aware
+of this; Ben Laurel provided conversions for Walleye pollock and Pacific
+cod (below) The conversions for Pollock (Gadus chalcogrammus) in the
+30-100 mm range are:
+
+TL(mm) = -0.25145 +1.08123\*SL(mm)
+
+SL(mm) = 0.29353 + 0.92359\*TL(mm)
+
+The conversions for Pacific cod (Gadus macrocephalus) in the 30-100mm
+range are
+
+TL(mm) = 0.26250 + 1.0769\*SL(mm)
+
+SL(mm) = 0.06258 + 0.92843\*TL(mm)
+
+##### Special studies fields
+
+There are a large number of fields contained within this table that are
+used internally for the flagging of specific studies that samples are
+collected for. This includes otolith, scale, stomach, genetics, bomb
+calorimetry, and isotope analysis. While these values are not stored in
+our database, additional data sets containing this data are likely
+available from the labs that have conducted these analyses. Please
+contact package maintainers or EMA researchers to get contact
+information for these data.
+
+##### Catch-Weighting
+
+This is not a specific field in this table, but this seems the most
+appropriate place to note this. Often times, when working with specimen
+level data, it is often recommended that you consider weighting your
+length data based on the total catch for that species+lhs at the given
+sampling event. This is because regardless of how many of a given
+specimen we catch at a station, we never measure more than the number of
+individuals specified by the collection protocols for that species
+(i.e. pollock may be 50 or 100, jellyfish may be 10). There is a
+vignette available that details a method for doing this procedure
+vignette(catch_weighting,package=“EMAdownload”).
+
+### Ending Notes
+
+The goal of this package was to introduce a simple tool to create easily
+reproducible data sets from EMA’s database in an effort to both expand
+use of EMAs data sets as well as give regular users a tool for querying
+reproducible data sets containing the most up-to-date data while being
+able to pull the data directly into R.
+
+Given the high degree of nuance to the data set, there is a lot of
+front-loaded information that users really should be aware of when
+curating a data set for analysis. The default arguments for our
+functions are set up in a way where a user should get a reasonably
+functional data set for their species+lhs combinations of interest.
+
+For any issues, please post them at
+<https://github.com/afsc-ema/EMAdownload/issues>.
