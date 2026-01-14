@@ -1,6 +1,6 @@
 Package: EMAdownload
 Title: Queries AKFIN APIs containing EMA data and formats data export for analysis
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("Domke", "Lia", , "lia.domke@noaa.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1155-989X"))
