@@ -34,10 +34,15 @@ not be re-installed, try detaching it first and then re-installing it
 detach("package:EMAdownload", unload = T)
 ```
 
-For a list of vignettes, please use
+## Data Structure:
+
+EMA survey data are nuanced, as survey design and sample processing has
+changed throughout the timeseries. Please use vignettes to see a
+in-progress write-up of all important data concepts. [Introduction
+vignette](https://afsc-ema.github.io/EMAdownload/articles/EMAdownload_introduction.html)
 
 ``` r
-browseVignettes("EMAdownload")
+vignette("EMAdownload_introduction", package="EMAdownload")
 ```
 
 ## Data Functions:
@@ -52,8 +57,14 @@ functions:
   together. Arguments include year range, survey region, gear used,
   trawl method, and species code/lhs.
 
-For a detailed breakdown of this, use
-`vignette("join_event_catch_guide", package="EMAdownload")`
+For a detailed breakdown of this use
+
+``` r
+vignette("join_event_catch_guide", package="EMAdownload")`
+```
+
+or view the [join event catch guide
+vignette](https://afsc-ema.github.io/EMAdownload/articles/join_event_catch_guide.html)
 
 - join_event_fish() for specimen data
 
@@ -76,13 +87,6 @@ Note, at the moment only join_event_catch and join_event_fish have
 filtering arguments built into the functions. All other function calls
 simply query the API link for a full and complete datasets and can take
 a few minutes to download from AKFIN.
-
-## Data Structure:
-
-EMA survey data are nuanced, as survey design and sample processing has
-changed throughout the timeseries. Please use
-`vignette("EMAdownload_introduction", package="EMAdownload")` to see a
-in-progress write-up of all important data concepts.
 
 For any issues, please post them in [EMAdownload github
 issues](https://github.com/afsc-ema/EMAdownload/issues)
