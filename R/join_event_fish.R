@@ -127,7 +127,7 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
     dplyr::filter(species_tsn %in% tsn_vec) |>
     dplyr::left_join(event_parameters, by=c("station_id"="station_id", "event_code"="event_code", "gear"="gear")) |>
     #dplyr::rename(notes = notes.y) |>
-    dplyr::select(sample_year, cruise_id, event_code, station_id, gear, gear_performance, tow_type,
+    dplyr::select(sample_year, haul_date, cruise_id, event_code, station_id, gear, gear_performance, tow_type,
                   nbs_strata, master_station_name, oceanographic_domain, large_marine_ecosystem, region, eq_latitude, eq_longitude, event.notes,
                   species_tsn, common_name, scientific_name, lhs_code, salmon_maturity, sex,
                   length, length_type, weight, scale_card_number, scale_card_position, otolith_number,
