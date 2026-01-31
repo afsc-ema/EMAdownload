@@ -32,7 +32,8 @@ get_ema_event<- function() {
                                     dplyr::case_when(gear_in_latitude <= 59.9 & !(large_marine_ecosystem == "GOA") ~ "SEBS",
                                                      gear_in_latitude > 59.9 & gear_in_latitude <= 65.5 & !(large_marine_ecosystem == "GOA") ~ "NBS",
                                                      gear_in_latitude > 65.5 ~ "Chukchi",
-                                                     large_marine_ecosystem == "GOA" ~ "GOA"), region))
+                                                     large_marine_ecosystem == "GOA" ~ "GOA"), region)) |>
+      dplyr::mutate(haul_date = as.Date(haul_date))
 
   } else {
     # if the data.tmp is one row or less lets print the error message from akfin
