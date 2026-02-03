@@ -4,7 +4,13 @@
 \alias{get_ema_fish}
 \title{Get EMA fish specimen data with event information}
 \usage{
-get_ema_fish()
+get_ema_fish(force_download)
+}
+\arguments{
+\item{force_download}{Bypass cache and force download}
+}
+\value{
+a dataframe with all specimen data
 }
 \description{
 This function pulls specimen level data with associated event information from

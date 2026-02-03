@@ -4,7 +4,13 @@
 \alias{get_ema_catch}
 \title{Get EMA catch table}
 \usage{
-get_ema_catch()
+get_ema_catch(force_download)
+}
+\arguments{
+\item{force_download}{Bypass cache and force download}
+}
+\value{
+a dataframe with all trawl related catch information
 }
 \description{
 This function pulls ecosystem survey data (from EMA surveys) from the AKFIN data server

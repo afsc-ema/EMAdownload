@@ -19,40 +19,31 @@
 #' Defaults to false if no argument entered. However, when catch0 == FALSE it will give you any events where NOTHING was caught in the net
 #' @param trawl_method Optional filter for trawl or tow method (i.e. surface, midwater, oblique, live box (surface trawl with a live box), fishing power comparison, or diel tows)
 #' See look up table for full explanation of category. Default to "S" or surface tow.
+#' @param force_download forces a redownload of data directly from AKFINs API rather than using a cached version of the data. This argument will force a re-download of all data not just event or catch
 #' @returns Returns a data frame of event information with catch data
 #' @export
 #' @examples df <- join_event_catch(start_year=2002,end_year=2024,
 #' survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
 
 join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, tsn=NA,lhs=NA,
-                             gear= c("CAN","Nor264"), trawl_method="S", catch0=FALSE) {
-  # if else function looks for "cth", "event", "event_parameters" or "taxa" files in local environment before
-  # re-downloading them from AkFIN via the API
+                             gear= c("CAN","Nor264"), trawl_method="S", catch0=FALSE, force_download = FALSE) {
+
   # other inputs needed for testing
   # gear <- c("CAN", "NETS156", "Nor264"); trawl_method <- NA; start_year <- 2003;
   # end_year <- 3000; tsn <- NA; lhs <- NA; catch0 = FALSE; trawl_method <- "S"; survey_region <- NA
   # tsn <- 161975; catch0 <- TRUE
-  if(all(exists("cth"),exists("event_parameters"),exists("taxa"))) {
-    warning("Local data files exist. Formatting file from those exports")
-  } else {
-
 
   # download tables from AKFIN
-  evnt <- get_ema_event() |>
+  evnt <- get_ema_event(force_download) |>
     ## Filter out aborted and unsatisfactory tows.
     dplyr::filter (!gear_performance %in% c("A","U")) |>
     dplyr::rename(event_notes = notes)
-  cth <- get_ema_catch() |>
+  cth <- get_ema_catch(force_download) |>
     dplyr::rename(catch_notes = notes)
-  taxa <- get_ema_taxonomy() |>
+  taxa <- get_ema_taxonomy(force_download) |>
     dplyr::rename(taxa_notes = notes)
-  event_parameters <- get_ema_event_parameters()
-  }
+  event_parameters <- get_ema_event_parameters(force_download)
 
-  ###saves list of data files to global environment
-  df_list <- list(cth, event_parameters, taxa)
-  names(df_list) <- c("cth", "event_parameters", "taxa")
-  list2env(df_list, envir=.GlobalEnv)
 
   # gear filter - only allow gears present in cth table
   if(all(gear %in% unique(cth$gear))){

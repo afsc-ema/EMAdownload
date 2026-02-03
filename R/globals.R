@@ -16,5 +16,6 @@ utils::globalVariables(c(
   "notes", "fish_number", "scale_position_pref_code", "gonad_weight",
   "caloric_number", "isotope_number", "stomach_number", "barcode",
   "fat_meter", "akfin_load_date", "master_station_name", "notes.x",
-  "event.notes", "where", "haul_date","event_notes", "catch_notes"
+  "event.notes", "where", "haul_date","event_notes", "catch_notes",
+  "specimen_notes"
 ))

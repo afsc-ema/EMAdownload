@@ -4,7 +4,13 @@
 \alias{get_ema_taxonomy}
 \title{Get ema taxa}
 \usage{
-get_ema_taxonomy()
+get_ema_taxonomy(force_download = FALSE)
+}
+\arguments{
+\item{force_download}{Bypass cache and force download}
+}
+\value{
+returns look up table of species taxonomy
 }
 \description{
 This function pulls ecosystem survey data (from EMA surveys) from the AKFIN data server

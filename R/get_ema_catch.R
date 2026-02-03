@@ -3,18 +3,18 @@
 #' @description This function pulls ecosystem survey data (from EMA surveys) from the AKFIN data server
 #' It includes parameters to control start and end year, gear type, and TSN (species code)
 #'
+#' @param force_download Bypass cache and force download
+#' @returns a dataframe with all trawl related catch information
 #' @export
 
 
-get_ema_catch <- function() {
+get_ema_catch <- function(force_download) {
   url <- "https://apex.psmfc.org/akfin/data_marts/ema/catch?"
-  #basic function to pull a url
-  response <- httr::GET(url=url)
 
-  # use jasonlite and the parameters we are setting above to pull data
-  data <- jsonlite::fromJSON(
-    httr::content(response, type = "text", encoding = "UTF-8")) |>
-    dplyr::bind_rows() |>
+
+  #use internal function to download and cache data
+  data.tmp <- .ema_downloader(url = url, name = "catch", force_download)
+  data <- data.tmp |>
     dplyr::rename_with(tolower) |> # rename all to lower case
     dplyr::mutate(gear = ifelse(gear == "NOR64", "Nor64", gear)) # fix typo in the db
 

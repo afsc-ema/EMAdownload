@@ -4,7 +4,13 @@
 \alias{get_ema_event}
 \title{Get ema event table}
 \usage{
-get_ema_event()
+get_ema_event(force_download = FALSE)
+}
+\arguments{
+\item{force_download}{Bypass cache and force download}
+}
+\value{
+dataframe with event infomration for most gear types from surveys
 }
 \description{
 This function pulls ecosystem survey data (from EMA surveys) from the AKFIN data server
