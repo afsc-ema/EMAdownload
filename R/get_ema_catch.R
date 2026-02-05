@@ -8,7 +8,7 @@
 #' @export
 
 
-get_ema_catch <- function(force_download) {
+get_ema_catch <- function(force_download = FALSE) {
   url <- "https://apex.psmfc.org/akfin/data_marts/ema/catch?"
 
 

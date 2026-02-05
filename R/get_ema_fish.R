@@ -13,7 +13,7 @@
 #' @export
 
 
-get_ema_fish <- function(force_download) {
+get_ema_fish <- function(force_download = FALSE) {
   #basic function to pull a url has api filter on it
   url <- "https://apex.psmfc.org/akfin/data_marts/ema/fish"
   #  create single and multiple species query with the tsn arg

@@ -10,7 +10,7 @@
 get_ema_taxonomy <- function(force_download = FALSE) {
   url <- "https://apex.psmfc.org/akfin/data_marts/ema/lut_trawl_species_tsn?"
 
-  data.tmp <- .ema_downloader(url = url, name = "fish", force_download)
+  data.tmp <- .ema_downloader(url = url, name = "taxonomy", force_download)
 
   #dat <- jsonlite::fromJSON(data.tmp, flatten = TRUE)
 
