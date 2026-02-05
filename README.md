@@ -23,7 +23,7 @@ recommend updating frequently.
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("afsc-ema/EMAdownload", quiet = F, force = T, dependencies=TRUE, build_vignettes=TRUE)
+devtools::install_github("afsc-ema/EMAdownload")
 ```
 
 If you get errors related to the package being in use and that it will
