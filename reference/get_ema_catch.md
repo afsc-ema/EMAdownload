@@ -7,5 +7,15 @@ gear type, and TSN (species code)
 ## Usage
 
 ``` r
-get_ema_catch()
+get_ema_catch(force_download = FALSE)
 ```
+
+## Arguments
+
+- force_download:
+
+  Bypass cache and force download
+
+## Value
+
+a dataframe with all trawl related catch information

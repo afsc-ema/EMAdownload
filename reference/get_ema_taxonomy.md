@@ -6,5 +6,15 @@ AKFIN data server
 ## Usage
 
 ``` r
-get_ema_taxonomy()
+get_ema_taxonomy(force_download = FALSE)
 ```
+
+## Arguments
+
+- force_download:
+
+  Bypass cache and force download
+
+## Value
+
+returns look up table of species taxonomy

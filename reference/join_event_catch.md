@@ -17,7 +17,8 @@ join_event_catch(
   lhs = NA,
   gear = c("CAN", "Nor264"),
   trawl_method = "S",
-  catch0 = FALSE
+  catch0 = FALSE,
+  force_download = FALSE
 )
 ```
 
@@ -79,6 +80,12 @@ join_event_catch(
   catch0 == FALSE it will give you any events where NOTHING was caught
   in the net
 
+- force_download:
+
+  forces a redownload of data directly from AKFINs API rather than using
+  a cached version of the data. This argument will force a re-download
+  of all data not just event or catch
+
 ## Value
 
 Returns a data frame of event information with catch data
@@ -88,5 +95,13 @@ Returns a data frame of event information with catch data
 ``` r
 df <- join_event_catch(start_year=2002,end_year=2024,
 survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
+#> Checking AKFIN for updates to event...
+#> Downloading event data...
+#> Checking AKFIN for updates to catch...
+#> Downloading catch data...
+#> Checking AKFIN for updates to taxonomy...
+#> Downloading taxonomy data...
+#> Checking AKFIN for updates to event_parameters...
+#> Downloading event_parameters data...
 #> [1] "Last AKFIN catch table upload date 2026-01-02T10:38:05Z"
 ```

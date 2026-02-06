@@ -12,5 +12,15 @@ information. You then join on station ID, event code, and event code.
 ## Usage
 
 ``` r
-get_ema_fish()
+get_ema_fish(force_download = FALSE)
 ```
+
+## Arguments
+
+- force_download:
+
+  Bypass cache and force download
+
+## Value
+
+a dataframe with all specimen data

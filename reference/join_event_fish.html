@@ -70,7 +70,8 @@ gear code.</p>
 <span>  survey_region <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  tsn <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  gear <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CAN"</span>, <span class="st">"Nor264"</span><span class="op">)</span>,</span>
-<span>  trawl_method <span class="op">=</span> <span class="st">"S"</span></span>
+<span>  trawl_method <span class="op">=</span> <span class="st">"S"</span>,</span>
+<span>  force_download <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -104,6 +105,10 @@ may be a survey to go to the "Chukchi", but if some stations occurred in the Nor
 <dt id="arg-trawl-method">trawl_method<a class="anchor" aria-label="anchor" href="#arg-trawl-method"></a></dt>
 <dd><p>Optional filter for trawl or tow method (i.e. surface, midwater, oblique, live box (surface trawl with a live box), fishing power comparison, or diel tows)
 See look up table for full explanation of category. Default to "S" or surface tow.</p></dd>
+
+
+<dt id="arg-force-download">force_download<a class="anchor" aria-label="anchor" href="#arg-force-download"></a></dt>
+<dd><p>forces a redownload of data directly from AKFINs API rather than using a cached version of the data. This argument will force a re-download of all data not just event or catch</p></dd>
 
 </dl></div>
     <div class="section level2">
