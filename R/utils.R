@@ -49,8 +49,7 @@
       # if the response is a 200 means that the execution is success, go ahead and download
       # note: according to ?http_status codes can also be in 100s and 200s and be successful
       if (httr::status_code(response) == 200) {
-        data <- jsonlite::fromJSON(httr::content(response, "text", encoding = "UTF-8")) |>
-          dplyr::bind_rows()
+        data <- jsonlite::fromJSON(httr::content(response, "text", encoding = "UTF-8"))
 
         # save the data in the form of RDS in the cache file, cache directory
         saveRDS(data, cache_file)

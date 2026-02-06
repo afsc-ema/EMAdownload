@@ -4,7 +4,7 @@
 \alias{get_ema_catch}
 \title{Get EMA catch table}
 \usage{
-get_ema_catch(force_download)
+get_ema_catch(force_download = FALSE)
 }
 \arguments{
 \item{force_download}{Bypass cache and force download}

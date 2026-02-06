@@ -77,7 +77,7 @@ join_event_fish <- function(start_year=2003, end_year=3000, survey_region=NA, ts
   }
   # error message if end year not within range
   if(end_year < 2003) {
-    stop("Start year not within acceptable range, try 2003 - present")
+    stop("End year not within acceptable range, try 2003 - present")
   }
 
   # Optional survey region filter - defaults to survey_region = NA

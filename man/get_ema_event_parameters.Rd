@@ -4,7 +4,7 @@
 \alias{get_ema_event_parameters}
 \title{Get ema event table}
 \usage{
-get_ema_event_parameters(force_download)
+get_ema_event_parameters(force_download = FALSE)
 }
 \arguments{
 \item{force_download}{Bypass cache and force download}

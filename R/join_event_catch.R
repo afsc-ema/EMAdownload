@@ -84,7 +84,7 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
   }
     # error message if end year not within range
   if(end_year < 2002) {
-    stop("Start year not within acceptable range, try 2002 - present")
+    stop("End year not within acceptable range, try 2002 - present")
   }
 
 

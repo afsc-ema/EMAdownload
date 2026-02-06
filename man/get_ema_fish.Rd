@@ -4,7 +4,7 @@
 \alias{get_ema_fish}
 \title{Get EMA fish specimen data with event information}
 \usage{
-get_ema_fish(force_download)
+get_ema_fish(force_download = FALSE)
 }
 \arguments{
 \item{force_download}{Bypass cache and force download}
