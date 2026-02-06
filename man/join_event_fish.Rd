@@ -10,7 +10,8 @@ join_event_fish(
   survey_region = NA,
   tsn = NA,
   gear = c("CAN", "Nor264"),
-  trawl_method = "S"
+  trawl_method = "S",
+  force_download = FALSE
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ may be a survey to go to the "Chukchi", but if some stations occurred in the Nor
 
 \item{trawl_method}{Optional filter for trawl or tow method (i.e. surface, midwater, oblique, live box (surface trawl with a live box), fishing power comparison, or diel tows)
 See look up table for full explanation of category. Default to "S" or surface tow.}
+
+\item{force_download}{forces a redownload of data directly from AKFINs API rather than using a cached version of the data. This argument will force a re-download of all data not just event or catch}
 }
 \value{
 Returns a data frame of event information with specimen data (lengths, weights, special samples taken)

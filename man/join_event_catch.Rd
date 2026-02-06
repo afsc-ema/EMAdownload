@@ -12,7 +12,8 @@ join_event_catch(
   lhs = NA,
   gear = c("CAN", "Nor264"),
   trawl_method = "S",
-  catch0 = FALSE
+  catch0 = FALSE,
+  force_download = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ See look up table for full explanation of category. Default to "S" or surface to
 
 \item{catch0}{Optional argument that indicates whether data should include 0-catches (i.e. stations that were fished where no species/lhs combinations were caught).
 Defaults to false if no argument entered. However, when catch0 == FALSE it will give you any events where NOTHING was caught in the net}
+
+\item{force_download}{forces a redownload of data directly from AKFINs API rather than using a cached version of the data. This argument will force a re-download of all data not just event or catch}
 }
 \value{
 Returns a data frame of event information with catch data
