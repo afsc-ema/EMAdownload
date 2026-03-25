@@ -22,7 +22,7 @@
 #' @param force_download forces a redownload of data directly from AKFINs API rather than using a cached version of the data. This argument will force a re-download of all data not just event or catch
 #' @returns Returns a data frame of event information with catch data
 #' @export
-#' @examples df <- join_event_catch(start_year=2002,end_year=2024,
+#' @examples df <- join_event_catch(start_year=2003,end_year=2024,
 #' survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
 
 join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, tsn=NA,lhs=NA,
