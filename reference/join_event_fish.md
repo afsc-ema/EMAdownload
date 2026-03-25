@@ -10,7 +10,8 @@ specimen data for locations where positive catch
 
 You may want to catch weight the specimen data in which case you should
 use the join_event_catch function to get the associated catch
-information. You then join on station ID, event code, and gear code.
+information. You then join on station ID, event code, and gear code (and
+depending on species lhs_code).
 
 ## Usage
 

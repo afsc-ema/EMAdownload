@@ -93,7 +93,7 @@ Returns a data frame of event information with catch data
 ## Examples
 
 ``` r
-df <- join_event_catch(start_year=2002,end_year=2024,
+df <- join_event_catch(start_year=2003,end_year=2024,
 survey_region=c("SEBS","NBS"),tsn=c(161980,934083),lhs=c("J","A0"),catch0=TRUE)
 #> Checking AKFIN for updates to event...
 #> Downloading event data...
