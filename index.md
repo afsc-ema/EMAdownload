@@ -1,19 +1,17 @@
 # EMAdownload
 
-Note: last full load date of EMA data to AKFIN was 2026-01-02T10:38:05Z
+Note: last full load date of EMA data to AKFIN was 2026-04-06T14:13:41Z
 
 ## Package Installation Instructions:
 
-You can install the development version of EMAdownload from [AFSC EMA
-GitHub](https://github.com/afsc-ema/EMAdownload)
-
 To install the package, please run the line below. This package is
-regularly being updated as functionality is improved and expanded, so we
-recommend updating frequently.
+currently under development to improve functionality, please update
+frequently and/or review the
+[changelog](https://github.com/afsc-ema/EMAdownload/commits/v0.1.0).
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("afsc-ema/EMAdownload")
+devtools::install_github("afsc-ema/EMAdownload", quiet = F, force = T, dependencies=TRUE, build_vignettes=TRUE)
 ```
 
 If you get errors related to the package being in use and that it will
@@ -26,46 +24,48 @@ detach("package:EMAdownload", unload = T)
 
 ## Data Structure:
 
-EMA survey data are nuanced, as survey design and sample processing has
-changed throughout the timeseries. Please use vignettes to see a
-in-progress write-up of all important data concepts. [Introduction
-vignette](https://afsc-ema.github.io/EMAdownload/articles/EMAdownload_introduction.html)
+EMA survey design and sample processing has changed throughout the
+timeseries given funding and survey objectives. Please review the
+introduction vignettes to better understand these data, [introduction
+vignette](https://afsc-ema.github.io/EMAdownload/articles/EMAdownload_introduction.html).
 
-``` r
-vignette("EMAdownload_introduction", package="EMAdownload")
-```
+Metadata/data look up tables can be viewed in the [EMA lookup tables
+vignette](https://afsc-ema.github.io/EMAdownload/articles/EMA-lookup-tables.html)
 
-## Data Functions:
+If you have additional questions, please reach out through the
+Discussion board or directly email the developers.
 
-This package has functions to automate the querying and formatting of
-EMA datasets. For beginner users, we recommend using the following two
-functions:
+## Accessing Data:
 
-- join_event_catch() for catch data. This function queries event and
-  catch data, then passes any filters entered as arguments for the
-  function to filter respective data products before joining them
-  together. Arguments include year range, survey region, gear used,
-  trawl method, and species code/lhs.
+Right now only fish related (events, catch, and specimen level) data are
+available through EMAdownload. For access to oceanographic data, please
+reach out to developers.
 
-For a detailed breakdown of this use
+To access data, we recommend using these two functions:
 
-``` r
-vignette("join_event_catch_guide", package="EMAdownload")`
-```
+- join_event_catch() for catch data with all associated event
+  information. Arguments include start and end year, survey region, gear
+  used, trawl method, and species code/lhs. Please see
+  ?join_event_catch() for more information. A brief vignette for use is
+  available
+  [here](https://afsc-ema.github.io/EMAdownload/articles/join_event_catch_guide.html)
 
-or view the [join event catch guide
-vignette](https://afsc-ema.github.io/EMAdownload/articles/join_event_catch_guide.html)
+- join_event_fish() for specimen data with all associated event
+  information. Similar to join_event_catch(), argument include start and
+  end year, survey region, gear used, trawl method, and species code.
 
-- join_event_fish() for specimen data
+For species taxonomic species number (species tsn) look up we recommend
+using get_ema_taxonomy() to see full list of species for which we have
+data available.
 
-For users experienced with EMA data and the nuances of the data, you can
-set up your own filters and joins using the individual data obtained
-with the following functions:
+For users familiar with these data, you get and join data with the
+following functions: However, please note you should be familiar with
+how the primary and secondary keys of these data to join them correctly.
 
 - get_ema_event (sampling events)
 
-- get_ema_event_parameters (post-sampling calculated event values
-  (i.e. effort, footrope depth))
+- get_ema_event_parameters (post-sampling calculated event values,
+  i.e. effort, footrope depth)
 
 - get_ema_catch (catch data)
 
@@ -73,10 +73,8 @@ with the following functions:
 
 - get_ema_taxonomy (species tsn lookup).
 
-Note, at the moment only join_event_catch and join_event_fish have
-filtering arguments built into the functions. All other function calls
-simply query the API link for a full and complete datasets and can take
-a few minutes to download from AKFIN.
+Note: these function calls simply query the API link for a full and
+complete datasets and can take a few minutes to download from AKFIN.
 
 For any issues, please post them in [EMAdownload github
 issues](https://github.com/afsc-ema/EMAdownload/issues)
