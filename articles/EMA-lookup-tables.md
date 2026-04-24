@@ -2,7 +2,7 @@
 
 This document contains lookup tables for EMA data codes. Data are pulled
 from internal data based off of EMA internal database. This report was
-last run 2026-04-07
+last run 2026-04-24
 
 ## Lookup tables
 
