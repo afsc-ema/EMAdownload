@@ -122,7 +122,7 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
                   tow_duration = ifelse(tow_type %in% c("S", "M", "L"),
                                         difftime(haulback_time, eq_time, units = "mins"),
                                         ifelse(tow_type %in% c("O"),
-                                               difftime(gear_in_time, gear_out_time, units = "mins"), NA))) |>
+                                               difftime(gear_out_time, gear_in_time, units = "mins"), NA))) |>
       dplyr::select(sample_year, cruise_id, event_code, station_id, master_station_name, gear, gear_performance, tow_type, nbs_strata, oceanographic_domain,
                   large_marine_ecosystem, region, haul_date, eq_time, eq_latitude, eq_longitude, gear_in_time, gear_in_latitude, gear_in_longitude,
                   gear_out_time, gear_out_latitude, gear_out_longitude, haulback_time, haulback_latitude, haulback_longitude,
@@ -150,7 +150,7 @@ join_event_catch <- function(start_year=2003, end_year=3000, survey_region=NA, t
                     tow_duration = ifelse(tow_type %in% c("S", "M", "L"),
                       difftime(haulback_time, eq_time, units = "mins"),
                       ifelse(tow_type %in% c("O"),
-                             difftime(gear_in_time, gear_out_time, units = "mins"), NA))) %>%
+                             difftime(gear_out_time, gear_in_time, units = "mins"), NA))) %>%
       dplyr::select(-akfin_load_date)
 
 
