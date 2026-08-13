@@ -86,8 +86,32 @@ how the primary and secondary keys of these data to join them correctly.
 Note: these function calls simply query the API link for a full and
 complete datasets and can take a few minutes to download from AKFIN.
 
+## Issue tracking
+
 For any issues, please post them in [EMAdownload github
 issues](https://github.com/afsc-ema/EMAdownload/issues)
+
+## Authorship and attribution
+
+For any publications and presentations, we ask that we (Caroline
+Lawrence, Andrew Dimond, and Lia Domke) are included in possible
+authorship discussions in particular if more than typical data
+processing is required to generate a requested dataset with the
+understanding that any authorship would have to meet a second
+requirement of the [CREDiT framework](https://credit.niso.org/) aside
+from data curation. Please reach out if you have any questions
+(<caroline.lawrence@noaa.gov>, <andrew.dimond@noaa.gov>,
+<lia.domke@noaa.gov>).
+
+At a minimum, we ask that the authors cite the data access package,
+EMAdownload and include an acknowledgments section “Auke Bay Labs EMA
+survey PIs and biologists for collecting and curating data.
+
+If you use the package to access the data for a publication or report,
+please cite:
+
+Lia D (????). *EMAdownload: Queries AKFIN APIs containing EMA data and
+formats data export for analysis*. R package version 0.1.0.
 
 ## Disclaimer
 
