@@ -10,6 +10,7 @@ frequently and/or review the
 [changelog](https://github.com/afsc-ema/EMAdownload/commits/v0.1.0).
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("afsc-ema/EMAdownload", quiet = F, force = T, dependencies=TRUE, build_vignettes=TRUE)
 ```
@@ -19,6 +20,7 @@ not be re-installed, try detaching it first and then re-installing it
 (above):
 
 ``` r
+
 detach("package:EMAdownload", unload = T)
 ```
 

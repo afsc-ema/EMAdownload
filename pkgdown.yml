@@ -1,8 +1,8 @@
-pandoc: 3.1.11
-pkgdown: 2.2.0
+pandoc: 3.8.3
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   EMA-lookup-tables: EMA-lookup-tables.html
   EMAdownload_introduction: EMAdownload_introduction.html
   join_event_catch_guide: join_event_catch_guide.html
-last_built: 2026-04-24T18:33Z
+last_built: 2026-08-13T17:55Z
