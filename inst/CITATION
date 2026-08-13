@@ -1,0 +1,7 @@
+bibentry(
+bibtype = "Manual",
+  title = "EMAdownload: Queries AKFIN APIs containing EMA data and formats data export",
+  author = person("Lia", "Domke", email = "lia.domke@noaa.gov", role = c("aut", "cre")),
+  year = "2026",
+  note = "R package version 0.1.0"
+)
